@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Урок — GitУчебник</title>
+  <meta name="theme-color" content="#fbfbf9">
+  <link rel="stylesheet" href="../style.css">
+  <script>
+    (function () {
+      var theme = null;
+      try {
+        theme = localStorage.getItem("git-tutorial:theme");
+      } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <!-- Стили конкретного урока подключаются здесь, когда появятся. -->
+</head>
+<body class="page-lesson">
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="На главную">
+        <span class="brand-mark" aria-hidden="true">◆</span>
+        <span class="brand-text">Git<em>Учебник</em></span>
+      </a>
+      <nav class="site-nav" aria-label="Навигация урока">
+        <a href="../index.html#lessons" class="nav-link">Все уроки</a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Переключить тему">
+          <svg class="theme-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4.2"></circle>
+            <path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.3 5.3l1.9 1.9M16.8 16.8l1.9 1.9M18.7 5.3l-1.9 1.9M7.2 16.8l-1.9 1.9"></path>
+          </svg>
+          <svg class="theme-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2Z"></path>
+          </svg>
+          <span class="theme-label">Светлая</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="lesson-main">
+    <header class="lesson-head">
+      <p class="eyebrow">Урок 01 · 5 минут</p>
+      <h1>Название урока</h1>
+      <p class="lesson-lead">Одно предложение о том, что читатель поймёт в этом уроке.</p>
+    </header>
+
+    <div class="lesson-layout">
+      <article class="lesson-theory">
+        <h2>Подзаголовок теории</h2>
+        <p>
+          Абзац-заглушка: здесь будет объяснение идеи. Держите абзацы короткими —
+          по 3–5 строк, чтобы текст легко сканировался.
+        </p>
+        <p>
+          Второй абзац: можно добавить пример или команду вроде
+          <code>git status</code>, чтобы сразу перейти от теории к практике.
+        </p>
+        <p class="lesson-tip">
+          Подсказка: важное замечание, которое читатель не должен пропустить.
+        </p>
+      </article>
+
+      <aside class="terminal" data-terminal aria-label="Терминал урока">
+        <div class="terminal-bar" aria-hidden="true">
+          <span class="terminal-dot terminal-dot--close"></span>
+          <span class="terminal-dot terminal-dot--min"></span>
+          <span class="terminal-dot terminal-dot--max"></span>
+          <span class="terminal-title">terminal — ~/git-tutorial</span>
+        </div>
+        <div class="terminal-body" data-terminal-body>
+          <div class="terminal-history" data-terminal-history role="log" aria-live="polite" aria-label="История команд">
+            <p class="terminal-line terminal-comment">Добро пожаловать! Введите help, чтобы увидеть доступные команды.</p>
+          </div>
+          <div class="terminal-input-line">
+            <span class="terminal-prompt" data-terminal-prompt aria-hidden="true">user@git-tutorial:~$</span>
+            <input
+              class="terminal-input"
+              data-terminal-input
+              type="text"
+              aria-label="Введите команду"
+              autocomplete="off"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+              enterkeyhint="send"
+            >
+          </div>
+        </div>
+      </aside>
+
+      <aside class="dashboard" aria-label="Дашборд состояния репозитория">
+        <section class="explorer">
+          <header class="explorer-bar">
+            <svg class="explorer-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M1.6 4h4.3l1.3 1.7h7.2v7.1H1.6z" fill="currentColor" opacity="0.85"></path>
+            </svg>
+            <h2 class="explorer-title" title="Working Directory (VS Code)">Working Directory (VS Code)</h2>
+            <span class="explorer-count" data-count="workdir">0</span>
+          </header>
+          <ul class="file-list" data-list="workdir" aria-label="Файлы рабочей директории"></ul>
+        </section>
+
+        <section class="explorer">
+          <header class="explorer-bar">
+            <svg class="explorer-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M1.6 4h4.3l1.3 1.7h7.2v7.1H1.6z" fill="currentColor" opacity="0.85"></path>
+            </svg>
+            <h2 class="explorer-title" title="Staging Area (Git Index)">Staging Area (Git Index)</h2>
+            <span class="explorer-count" data-count="staged">0</span>
+          </header>
+          <ul class="file-list" data-list="staged" aria-label="Файлы в индексе"></ul>
+        </section>
+
+        <section class="explorer">
+          <header class="explorer-bar">
+            <svg class="explorer-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M1.6 4h4.3l1.3 1.7h7.2v7.1H1.6z" fill="currentColor" opacity="0.85"></path>
+            </svg>
+            <h2 class="explorer-title" title="Local Repository (Commits)">Local Repository (Commits)</h2>
+            <span class="explorer-count" data-count="repo">0</span>
+          </header>
+          <ul class="file-list" data-list="repo" aria-label="Коммиты"></ul>
+        </section>
+      </aside>
+    </div>
+
+    <nav class="lesson-actions" aria-label="Навигация по урокам">
+      <a class="btn btn-ghost" href="../index.html#lessons">← Назад к списку</a>
+      <button class="btn btn-primary" type="button" disabled title="Следующий урок ещё готовится">
+        Следующий урок →
+      </button>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>GitУчебник · открытый проект</p>
+      <div class="footer-actions">
+        <button class="footer-reset" type="button" data-reset-progress>Сбросить прогресс</button>
+        <span class="footer-meta">HTML · CSS · JS без зависимостей</span>
+      </div>
+    </div>
+    <div class="container footer-dev">
+      <button class="footer-dev-link" type="button" data-reset-progress-silent>Очистить кэш урока (только для тестов)</button>
+    </div>
+  </footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../simulator.js" defer></script>
+  <!-- Дополнительные шаги урока, если понадобятся. -->
+</body>
+</html>

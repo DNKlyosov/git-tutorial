@@ -1,0 +1,1431 @@
+/* ============================================================
+   GitУчебник — базовые стили
+   Светлая тема — по умолчанию, тёмная — через [data-theme="dark"]
+   ============================================================ */
+
+/* ---------- Токены ---------- */
+:root {
+  --bg: #fbfbf9;
+  --bg-soft: #f3f3ef;
+  --surface: #ffffff;
+  --text: #16181c;
+  --text-soft: #5b6068;
+  --text-faint: #8a8f98;
+  --border: #e3e3dc;
+  --border-strong: #cfcfc6;
+  --accent: #c4442a;
+  --accent-soft: rgba(196, 68, 42, 0.1);
+  --accent-contrast: #ffffff;
+  --focus: #1f6feb;
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Code", ui-monospace, monospace;
+
+  --header-h: 64px;
+  --maxw: 1040px;
+
+  --shadow-sm: 0 1px 2px rgba(20, 22, 26, 0.04);
+  --shadow-md: 0 6px 24px rgba(20, 22, 26, 0.06);
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: #0e1013;
+  --bg-soft: #14171b;
+  --surface: #171a1f;
+  --text: #e9eaec;
+  --text-soft: #a3a8b0;
+  --text-faint: #737980;
+  --border: #262a30;
+  --border-strong: #343a42;
+  --accent: #f2734f;
+  --accent-soft: rgba(242, 115, 79, 0.14);
+  --accent-contrast: #12100f;
+  --focus: #6ea8ff;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.45);
+
+  color-scheme: dark;
+}
+
+/* ---------- Сброс ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 640;
+}
+
+p {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--text);
+  color: var(--bg);
+  font-size: 14px;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  top: 12px;
+}
+
+/* ---------- Шапка ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bg);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 680;
+  letter-spacing: -0.02em;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 13px;
+  line-height: 1;
+}
+
+.brand-text em {
+  font-style: normal;
+  color: var(--text-soft);
+  font-weight: 460;
+}
+
+.user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 6px;
+  padding: 3px 9px 3px 3px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-soft);
+  font-size: 12.5px;
+}
+
+.user-chip[hidden] {
+  display: none;
+}
+
+.user-avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f4a261, #c4442a);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1;
+}
+
+.user-name {
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-link {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-soft);
+  font-size: 14.5px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: var(--text);
+  background: var(--bg-soft);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: 6px;
+  padding: 7px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 13.5px;
+  color: var(--text-soft);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--text-faint);
+}
+
+.theme-toggle .theme-icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Показываем одну иконку по активной теме. */
+.icon-moon {
+  display: none;
+}
+
+[data-theme="dark"] .icon-sun {
+  display: none;
+}
+
+[data-theme="dark"] .icon-moon {
+  display: block;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  padding-block: 88px 72px;
+  border-bottom: 1px solid var(--border);
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 4px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  max-width: 18ch;
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
+  font-weight: 660;
+}
+
+.hero-subtitle {
+  max-width: 56ch;
+  margin-top: 20px;
+  color: var(--text-soft);
+  font-size: clamp(1rem, 1.6vw, 1.125rem);
+  line-height: 1.65;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 560;
+  cursor: pointer;
+  transition: transform 0.12s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.btn-primary:hover {
+  background: #a8391f;
+  background: color-mix(in srgb, var(--accent) 88%, #000);
+}
+
+.btn-ghost {
+  border-color: var(--border-strong);
+  color: var(--text);
+  background: transparent;
+}
+
+.btn-ghost:hover {
+  background: var(--bg-soft);
+}
+
+/* ---------- Общие секции ---------- */
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-bottom: 28px;
+}
+
+.section-title {
+  font-size: clamp(1.35rem, 2.4vw, 1.65rem);
+}
+
+.section-note {
+  color: var(--text-faint);
+  font-size: 13.5px;
+}
+
+.lessons-section {
+  padding-block: 64px;
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
+
+/* ---------- Список уроков ---------- */
+.lesson-list {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+
+.lesson-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 12px;
+  border-bottom: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: background-color 0.16s ease;
+}
+
+.lesson-card:hover {
+  background: var(--bg-soft);
+}
+
+.lesson-card:hover .lesson-index {
+  color: var(--accent);
+}
+
+.lesson-item {
+  display: block;
+}
+
+.lesson-item > .lesson-card {
+  height: 100%;
+}
+
+a.lesson-card:hover .lesson-title {
+  color: var(--accent);
+}
+
+.lesson-index {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.lesson-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.lesson-desc {
+  margin-top: 3px;
+  color: var(--text-soft);
+  font-size: 14.5px;
+}
+
+.lesson-status {
+  padding: 3px 9px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--text-faint);
+  font-size: 11.5px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.lesson-status[data-status="ready"] {
+  border-color: transparent;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.lesson-status[data-status="done"] {
+  border-color: transparent;
+  background: var(--bg-soft);
+  color: var(--text-soft);
+}
+
+/* ---------- О курсе ---------- */
+.about-section {
+  padding-block: 16px 80px;
+}
+
+.about-section .section-title {
+  margin-bottom: 24px;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.about-item {
+  padding: 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.about-item h3 {
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 620;
+}
+
+.about-item p {
+  color: var(--text-soft);
+  font-size: 14.5px;
+}
+
+/* ---------- Подвал ---------- */
+.site-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  background: var(--bg-soft);
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 24px;
+  padding-block: 26px;
+  color: var(--text-soft);
+  font-size: 13.5px;
+}
+
+.footer-meta {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+
+.footer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+}
+
+.footer-reset {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.footer-reset:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.footer-dev {
+  padding-bottom: 18px;
+}
+
+.footer-dev-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-faint);
+  font: inherit;
+  font-size: 11.5px;
+  cursor: pointer;
+}
+
+.footer-dev-link:hover {
+  color: var(--text-soft);
+  text-decoration: underline;
+}
+
+/* ---------- Страница урока ---------- */
+.page-lesson {
+  --maxw: 1400px;
+}
+
+.lesson-main {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding: 48px 24px 64px;
+}
+
+.lesson-head {
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.lesson-head .eyebrow {
+  margin-bottom: 16px;
+}
+
+.lesson-head h1 {
+  max-width: 22ch;
+  font-size: clamp(1.9rem, 4.2vw, 2.75rem);
+  font-weight: 660;
+}
+
+.lesson-lead {
+  max-width: 58ch;
+  margin-top: 14px;
+  color: var(--text-soft);
+  font-size: clamp(1rem, 1.4vw, 1.0625rem);
+}
+
+.lesson-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 460px) minmax(0, 290px);
+  gap: 32px;
+  align-items: start;
+  margin-top: 40px;
+}
+
+.lesson-theory {
+  max-width: 62ch;
+}
+
+.lesson-theory h2 {
+  margin-bottom: 14px;
+  font-size: 1.0625rem;
+  font-weight: 620;
+}
+
+.lesson-theory p {
+  margin-bottom: 16px;
+  color: var(--text-soft);
+}
+
+.lesson-theory code {
+  padding: 2px 5px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--bg-soft);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.lesson-theory .lesson-tip {
+  margin-top: 28px;
+  padding: 14px 16px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--bg-soft);
+  color: var(--text-soft);
+  font-size: 14.5px;
+}
+
+.lesson-steps {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 16px;
+  padding-left: 1.4em;
+  color: var(--text-soft);
+  list-style: decimal;
+}
+
+.lesson-steps li::marker {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+
+/* ---------- Задачи урока ---------- */
+.tasks {
+  margin-top: 24px;
+  padding: 14px 16px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+}
+
+.tasks-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.lesson-theory .tasks-title {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 11.5px;
+  font-weight: 640;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tasks-count {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tasks-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-soft);
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+
+.task-check {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 50%;
+  color: transparent;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.task.is-done {
+  color: var(--text);
+}
+
+.task.is-done .task-check {
+  border-color: #2ea043;
+  background: #2ea043;
+  color: #ffffff;
+}
+
+.task .task-label {
+  min-width: 0;
+  color: inherit;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* Терминал намеренно тёмный в обеих темах. */
+.terminal {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  overflow: hidden;
+  border: 1px solid #22262d;
+  border-radius: 14px;
+  background: #0f1115;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  border-bottom: 1px solid #22262d;
+  background: #15181d;
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3a4048;
+}
+
+.terminal-dot--close {
+  background: #ff5f57;
+}
+
+.terminal-dot--min {
+  background: #febc2e;
+}
+
+.terminal-dot--max {
+  background: #28c840;
+}
+
+.terminal-title {
+  margin-left: 6px;
+  color: #7d8590;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.03em;
+}
+
+.terminal-branch {
+  margin-left: auto;
+  padding: 1px 8px;
+  border: 1px solid #30363d;
+  border-radius: 999px;
+  background: #1b2027;
+  color: #7ee787;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  line-height: 17px;
+  white-space: nowrap;
+}
+
+.terminal-branch[hidden] {
+  display: none;
+}
+
+.terminal-body {
+  display: flex;
+  flex-direction: column;
+  height: 360px;
+  overflow: hidden;
+  color: #c9d1d9;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.65;
+  tab-size: 4;
+  cursor: text;
+}
+
+.terminal:focus-within {
+  border-color: #2f81f7;
+  box-shadow: 0 0 0 1px #2f81f7, 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.terminal-history {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  flex: 0 1 auto;
+  min-height: 0;
+  padding: 14px 14px 8px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #30363d transparent;
+}
+
+.terminal-history::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-history::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: #30363d;
+}
+
+.terminal-entry {
+  display: grid;
+  gap: 2px;
+}
+
+.terminal-echo {
+  white-space: pre-wrap;
+}
+
+.terminal-prompt {
+  color: #7ee787;
+  white-space: nowrap;
+}
+
+.terminal-cmd {
+  color: #e6edf3;
+  overflow-wrap: anywhere;
+}
+
+.terminal-output {
+  margin: 0;
+  color: #c9d1d9;
+}
+
+.terminal-line {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.terminal-comment {
+  color: #8b949e;
+}
+
+.terminal-error {
+  color: #ff7b72;
+}
+
+.terminal-success {
+  color: #56d364;
+}
+
+.terminal-muted {
+  color: #8b949e;
+}
+
+.terminal-warn {
+  color: #e3b341;
+}
+
+.terminal-note {
+  color: #79c0ff;
+}
+
+.terminal-input-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 8px;
+  padding: 4px 14px 16px;
+}
+
+.terminal-input {
+  flex: 1 1 60px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #e6edf3;
+  font: inherit;
+  line-height: inherit;
+  caret-color: #7ee787;
+}
+
+.terminal-input::placeholder {
+  color: #4d5560;
+}
+
+.terminal-input:focus {
+  outline: none;
+}
+
+/* ---------- Дашборд состояния ---------- */
+.dashboard {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  min-width: 0;
+}
+
+/* Панели намеренно светлые, как окна проводника. */
+.explorer {
+  overflow: hidden;
+  border: 1px solid #d9dce3;
+  border-radius: 10px;
+  background: #f7f8fa;
+  color: #23272f;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+
+.explorer-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 10px;
+  border-bottom: 1px solid #e2e5ea;
+  background: #eceef2;
+  color: #3d444d;
+}
+
+.explorer-icon {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: #8a93a0;
+}
+
+.explorer-title {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 11.5px;
+  font-weight: 620;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.explorer-count {
+  flex: none;
+  min-width: 18px;
+  margin-left: auto;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #dfe3e9;
+  color: #5b636e;
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  line-height: 17px;
+  text-align: center;
+}
+
+.file-list {
+  display: grid;
+  gap: 1px;
+  min-height: 76px;
+  padding: 6px;
+}
+
+.file-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 7px;
+  border-radius: 5px;
+}
+
+.file-row:hover {
+  background: #e9edf2;
+}
+
+.file-icon {
+  display: inline-flex;
+  flex: none;
+  width: 14px;
+  height: 14px;
+}
+
+.file-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.file-name {
+  min-width: 0;
+  overflow: hidden;
+  color: #2b3138;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-badge {
+  flex: none;
+  margin-left: auto;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #e6e8ec;
+  color: #5c636d;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  line-height: 15px;
+}
+
+.file-badge[data-status="modified"] {
+  background: #fff1d6;
+  color: #8a5a00;
+}
+
+.file-badge[data-status="staged"] {
+  background: #dcf5e3;
+  color: #146c2e;
+}
+
+.file-badge[data-status="committed"] {
+  padding-inline: 7px;
+  background: #dcf5e3;
+  color: #146c2e;
+  font-weight: 700;
+}
+
+/* Коммиты в третьей панели */
+.file-list[data-list="repo"] {
+  gap: 6px;
+  padding-top: 8px;
+}
+
+.commit-card {
+  display: grid;
+  gap: 4px;
+  padding: 8px 9px;
+  border: 1px solid #e2e5ea;
+  border-radius: 7px;
+  background: #ffffff;
+}
+
+.commit-hash {
+  color: #b45309;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.commit-merge {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #ece9ff;
+  color: #5b47b6;
+  font-size: 9.5px;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.commit-message {
+  margin: 0;
+  color: #23272f;
+  font-size: 12px;
+  font-weight: 560;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.commit-files {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 10px;
+  margin-top: 2px;
+}
+
+.commit-file {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #5b636e;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+}
+
+.commit-file .file-icon {
+  width: 12px;
+  height: 12px;
+}
+
+.commit-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.commit-pushed {
+  margin-left: auto;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #dcf5e3;
+  color: #146c2e;
+  font-size: 9.5px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* ---------- Удалённый репозиторий (GitHub) ---------- */
+.remote {
+  margin-top: 32px;
+  overflow: hidden;
+  border: 1px solid #d9dce3;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #23272f;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.1);
+}
+
+.gh-profile {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e5ea;
+  background: #f6f8fa;
+}
+
+.gh-avatar {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f4a261, #c4442a);
+  color: #ffffff;
+}
+
+.gh-avatar svg {
+  width: 15px;
+  height: 15px;
+}
+
+.gh-repo {
+  color: #24292f;
+  font-size: 13.5px;
+}
+
+.gh-owner {
+  color: #57606a;
+}
+
+.gh-sep {
+  margin: 0 3px;
+  color: #8c959f;
+}
+
+.gh-public {
+  padding: 0 8px;
+  border: 1px solid #d0d7de;
+  border-radius: 999px;
+  color: #57606a;
+  font-size: 11px;
+  line-height: 18px;
+}
+
+.gh-remote-url {
+  min-width: 0;
+  margin-left: auto;
+  overflow: hidden;
+  color: #8a919b;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gh-commits {
+  display: grid;
+  margin: 0;
+  padding: 0;
+}
+
+.gh-commit {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 16px;
+  border-bottom: 1px solid #eaeef2;
+}
+
+.gh-commit:last-child {
+  border-bottom: 0;
+}
+
+.gh-commit:hover {
+  background: #f6f8fa;
+}
+
+.gh-avatar--sm {
+  width: 24px;
+  height: 24px;
+}
+
+.gh-avatar--sm svg {
+  width: 14px;
+  height: 14px;
+}
+
+.gh-commit-main {
+  min-width: 0;
+}
+
+.gh-commit-msg {
+  margin: 0 0 2px;
+  color: #24292f;
+  font-size: 12.5px;
+  font-weight: 560;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.gh-commit-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  color: #6e7781;
+  font-size: 11px;
+}
+
+.gh-author {
+  color: #57606a;
+  font-weight: 540;
+}
+
+.gh-hash {
+  padding: 0 5px;
+  border-radius: 4px;
+  background: #eff1f3;
+  color: #57606a;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+}
+
+.gh-empty {
+  padding: 18px 16px;
+  color: #8a919b;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.explorer-empty {
+  padding: 10px 8px;
+  color: #8a919b;
+  font-size: 11.5px;
+  font-style: italic;
+}
+
+.lesson-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.btn:disabled:hover,
+.btn:disabled:active {
+  transform: none;
+}
+
+.btn-primary:disabled:hover {
+  background: var(--accent);
+}
+
+/* Кнопка «Следующий урок», пока задачи урока не выполнены. */
+.btn.btn--locked {
+  border-color: var(--border);
+  background: var(--bg-soft);
+  color: var(--text-faint);
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+.btn.btn--locked:hover {
+  background: var(--bg-soft);
+  transform: none;
+}
+
+/* ---------- Адаптив ---------- */
+@media (max-width: 720px) {
+  .hero {
+    padding-block: 64px 56px;
+  }
+
+  .site-nav .nav-link {
+    display: none;
+  }
+
+  /* На странице урока оставляем ссылку «Все уроки» — это путь назад. */
+  .page-lesson .site-nav .nav-link {
+    display: inline-block;
+  }
+
+  .theme-toggle .theme-label {
+    display: none;
+  }
+
+  .theme-toggle {
+    padding: 8px 10px;
+  }
+
+  .lesson-card {
+    grid-template-columns: auto 1fr;
+    row-gap: 10px;
+    padding-block: 20px;
+  }
+
+  .lesson-status {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 420px) {
+  .container {
+    padding-inline: 18px;
+  }
+
+  .lesson-main {
+    padding-inline: 18px;
+  }
+}
+
+@media (max-width: 1279px) {
+  .lesson-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+    gap: 32px;
+  }
+
+  .dashboard {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .lesson-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+
+  .terminal {
+    position: static;
+  }
+
+  .terminal-body {
+    height: 300px;
+  }
+
+  .dashboard {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .lesson-actions {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 40px;
+  }
+
+  .lesson-actions .btn {
+    width: 100%;
+  }
+}

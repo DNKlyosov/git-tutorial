@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git — интерактивный учебник</title>
+  <meta name="description" content="Интерактивный учебник по Git: от первого коммита до ветвления и разрешения конфликтов.">
+  <meta name="theme-color" content="#fbfbf9">
+  <link rel="stylesheet" href="style.css">
+  <!-- Тема применяется до отрисовки, чтобы не было вспышки светлого фона. -->
+  <script>
+    (function () {
+      var theme = null;
+      try {
+        theme = localStorage.getItem("git-tutorial:theme");
+      } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="На главную">
+        <span class="brand-mark" aria-hidden="true">◆</span>
+        <span class="brand-text">Git<em>Учебник</em></span>
+      </a>
+
+      <nav class="site-nav" aria-label="Основная навигация">
+        <a href="#lessons" class="nav-link">Уроки</a>
+        <a href="#about" class="nav-link">О курсе</a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Переключить тему">
+          <svg class="theme-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4.2"></circle>
+            <path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.3 5.3l1.9 1.9M16.8 16.8l1.9 1.9M18.7 5.3l-1.9 1.9M7.2 16.8l-1.9 1.9"></path>
+          </svg>
+          <svg class="theme-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2Z"></path>
+          </svg>
+          <span class="theme-label">Светлая</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero container">
+      <p class="eyebrow">Курс · 6 уроков</p>
+      <h1 class="hero-title">Git без магии.<br>Только практика.</h1>
+      <p class="hero-subtitle">
+        Короткие уроки с интерактивными сценариями прямо в браузере:
+        коммиты, ветки, слияния и восстановление после ошибок.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="lessons/lesson-1.html">Начать обучение</a>
+        <a class="btn btn-ghost" href="#about">Как устроен курс</a>
+      </div>
+    </section>
+
+    <section id="lessons" class="container lessons-section" aria-labelledby="lessons-title">
+      <div class="section-head">
+        <h2 id="lessons-title" class="section-title">Список уроков</h2>
+        <p class="section-note">Прогресс сохраняется между уроками.</p>
+      </div>
+
+      <ul class="lesson-list" id="lesson-list">
+        <li class="lesson-item">
+          <a class="lesson-card" href="lessons/lesson-1.html" data-lesson-link>
+            <span class="lesson-index">01</span>
+            <div class="lesson-body">
+              <h3 class="lesson-title">Введение в Git</h3>
+              <p class="lesson-desc">git config, git init и git status.</p>
+            </div>
+            <span class="lesson-status" data-status="ready">Доступен</span>
+          </a>
+        </li>
+        <li class="lesson-item">
+          <a class="lesson-card" href="lessons/lesson-2.html" data-lesson-link>
+            <span class="lesson-index">02</span>
+            <div class="lesson-body">
+              <h3 class="lesson-title">Добавление файлов</h3>
+              <p class="lesson-desc">touch, git add и работа с индексом.</p>
+            </div>
+            <span class="lesson-status" data-status="ready">Доступен</span>
+          </a>
+        </li>
+        <li class="lesson-item">
+          <a class="lesson-card" href="lessons/lesson-3.html" data-lesson-link>
+            <span class="lesson-index">03</span>
+            <div class="lesson-body">
+              <h3 class="lesson-title">Фиксация изменений</h3>
+              <p class="lesson-desc">git commit, сообщение коммита и чистая директория.</p>
+            </div>
+            <span class="lesson-status" data-status="ready">Доступен</span>
+          </a>
+        </li>
+        <li class="lesson-item">
+          <a class="lesson-card" href="lessons/lesson-4.html" data-lesson-link>
+            <span class="lesson-index">04</span>
+            <div class="lesson-body">
+              <h3 class="lesson-title">Связь с GitHub</h3>
+              <p class="lesson-desc">remote add, push, fetch, pull и GitHub.</p>
+            </div>
+            <span class="lesson-status" data-status="ready">Доступен</span>
+          </a>
+        </li>
+        <li class="lesson-item">
+          <a class="lesson-card" href="lessons/lesson-5.html" data-lesson-link>
+            <span class="lesson-index">05</span>
+            <div class="lesson-body">
+              <h3 class="lesson-title">Ветвление</h3>
+              <p class="lesson-desc">git branch и git checkout для экспериментов.</p>
+            </div>
+            <span class="lesson-status" data-status="ready">Доступен</span>
+          </a>
+        </li>
+        <li class="lesson-item">
+          <a class="lesson-card" href="lessons/lesson-6.html" data-lesson-link>
+            <span class="lesson-index">06</span>
+            <div class="lesson-body">
+              <h3 class="lesson-title">Слияние веток</h3>
+              <p class="lesson-desc">git merge и объединение истории.</p>
+            </div>
+            <span class="lesson-status" data-status="ready">Доступен</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section id="about" class="container about-section" aria-labelledby="about-title">
+      <h2 id="about-title" class="section-title">Как устроен курс</h2>
+      <div class="about-grid">
+        <article class="about-item">
+          <h3>Коротко</h3>
+          <p>Один урок — одна идея. Материал разбит на небольшие шаги.</p>
+        </article>
+        <article class="about-item">
+          <h3>Практично</h3>
+          <p>Каждый урок заканчивается задачей, которую можно выполнить в браузере.</p>
+        </article>
+        <article class="about-item">
+          <h3>Без сборки</h3>
+          <p>Чистые HTML, CSS и JavaScript — проект открывается прямо из папки.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>GitУчебник · открытый проект</p>
+      <div class="footer-actions">
+        <button class="footer-reset" type="button" data-reset-progress>Сбросить прогресс</button>
+        <span class="footer-meta">HTML · CSS · JS без зависимостей</span>
+      </div>
+    </div>
+    <div class="container footer-dev">
+      <button class="footer-dev-link" type="button" data-reset-progress-silent>Очистить кэш урока (только для тестов)</button>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+  <script src="simulator.js" defer></script>
+</body>
+</html>
