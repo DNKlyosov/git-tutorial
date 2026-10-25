@@ -479,6 +479,13 @@ a.lesson-card:hover .lesson-title {
   color: var(--text-soft);
 }
 
+/* Бонусный урок после основного курса. */
+.lesson-status[data-status="bonus"] {
+  border-color: transparent;
+  background: #fdf3d7;
+  color: #8a5a00;
+}
+
 /* ---------- О курсе ---------- */
 .about-section {
   padding-block: 16px 80px;
@@ -514,10 +521,15 @@ a.lesson-card:hover .lesson-title {
 }
 
 /* ---------- Подвал ---------- */
+/* Подвал прижат к низу экрана: body — flex-колонка,
+   .site-footer забирает всё свободное место через margin-top: auto. */
 .site-footer {
   margin-top: auto;
   border-top: 1px solid var(--border);
   background: var(--bg-soft);
+  color: var(--text-soft);
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .footer-inner {
@@ -525,56 +537,50 @@ a.lesson-card:hover .lesson-title {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 6px 24px;
-  padding-block: 26px;
-  color: var(--text-soft);
-  font-size: 13.5px;
+  gap: 8px 24px;
+  padding-block: 22px;
 }
 
-.footer-meta {
+.footer-credit,
+.footer-feedback {
+  color: var(--text-soft);
+}
+
+.footer-feedback {
   color: var(--text-faint);
-  font-family: var(--font-mono);
-  font-size: 12.5px;
 }
 
 .footer-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px 16px;
+  gap: 6px 18px;
+}
+
+/* Ссылки в подвале: серые, при наведении — акцентный цвет. */
+.footer-link {
+  color: var(--text-soft);
+  border-bottom: 1px solid var(--border-strong);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.footer-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
 .footer-reset {
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--accent);
+  color: var(--text-faint);
   font: inherit;
-  font-size: 13px;
+  font-size: 12.5px;
   cursor: pointer;
-  opacity: 0.85;
+  transition: color 0.15s ease;
 }
 
 .footer-reset:hover {
-  opacity: 1;
-  text-decoration: underline;
-}
-
-.footer-dev {
-  padding-bottom: 18px;
-}
-
-.footer-dev-link {
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--text-faint);
-  font: inherit;
-  font-size: 11.5px;
-  cursor: pointer;
-}
-
-.footer-dev-link:hover {
   color: var(--text-soft);
   text-decoration: underline;
 }
@@ -608,9 +614,14 @@ a.lesson-card:hover .lesson-title {
 
 .lesson-lead {
   max-width: 58ch;
-  margin-top: 14px;
+  margin-top: 0;
   color: var(--text-soft);
   font-size: clamp(1rem, 1.4vw, 1.0625rem);
+}
+
+/* В уроках 7–21 заголовок живёт в теории, поэтому лид идёт сразу за eyebrow. */
+.lesson-head h1 + .lesson-lead {
+  margin-top: 14px;
 }
 
 .lesson-layout {
@@ -631,6 +642,151 @@ a.lesson-card:hover .lesson-title {
   font-weight: 620;
 }
 
+/* Заголовок урока в левой колонке: «Урок N. Название». */
+.lesson-theory .theory-title {
+  margin-bottom: 18px;
+  font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+  font-weight: 660;
+  letter-spacing: -0.02em;
+}
+
+/* Подразделы теории: раньше это были h2, теперь h3. */
+.lesson-theory h3 {
+  margin: 26px 0 10px;
+  font-size: 1.0625rem;
+  font-weight: 620;
+}
+
+.lesson-theory h3:first-of-type {
+  margin-top: 22px;
+}
+
+/* Блок «[!NOTE] Зачем это нужно?» в начале теории. */
+.lesson-note {
+  margin: 0 0 22px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-left: 3px solid #0366d6;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: color-mix(in srgb, #0366d6 5%, var(--bg-soft));
+}
+
+/* Специфичность важнее общего правила .lesson-theory p ниже по файлу. */
+.lesson-theory .lesson-note p {
+  margin: 0;
+}
+
+.lesson-theory .lesson-note-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: var(--text);
+  font-size: 13.5px;
+  font-weight: 640;
+  line-height: 1.3;
+}
+
+.lesson-note-badge {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #0366d6;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 620;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+}
+
+.lesson-theory .lesson-note p:last-child {
+  color: var(--text-soft);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+[data-theme="dark"] .lesson-note {
+  border-left-color: #6ea8ff;
+  background: color-mix(in srgb, #6ea8ff 8%, var(--bg-soft));
+}
+
+[data-theme="dark"] .lesson-note-badge {
+  background: #6ea8ff;
+  color: #0e1013;
+}
+
+/* Плашка «[!IMPORTANT]»: важное требование перед началом урока. */
+.lesson-note--important {
+  border-left-color: #8250df;
+  background: color-mix(in srgb, #8250df 5%, var(--bg-soft));
+}
+
+.lesson-note--important .lesson-note-badge {
+  background: #8250df;
+}
+
+[data-theme="dark"] .lesson-note--important {
+  border-left-color: #a371f7;
+  background: color-mix(in srgb, #a371f7 8%, var(--bg-soft));
+}
+
+[data-theme="dark"] .lesson-note--important .lesson-note-badge {
+  background: #a371f7;
+  color: #0e1013;
+}
+
+/* Кнопка-ссылка на внешний сайт: заметна на фоне текста урока. */
+.btn-download {
+  display: inline-block;
+  margin: 10px 0;
+  padding: 8px 16px;
+  border-radius: 4px;
+  background-color: #007acc;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn-download:hover {
+  background-color: #005f9e;
+}
+
+/* Кликабельные команды Git со ссылкой на Pro Git. */
+a.git-command {
+  color: #0366d6;
+  text-decoration: none;
+  border-bottom: 1px dotted #0366d6;
+}
+
+/* Ссылка выглядит как код, но остаётся кликабельной. */
+a.git-command {
+  padding: 1px 5px;
+  border: 1px solid var(--border);
+  border-bottom: 1px dotted #0366d6;
+  border-radius: 5px;
+  background: var(--bg-soft);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  /* Длинные команды (git remote add …, git config …) переносятся по словам,
+     иначе на узких экранах они вылезают за колонку теории. */
+  overflow-wrap: anywhere;
+}
+
+a.git-command:hover {
+  color: #024ea0;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+[data-theme="dark"] a.git-command {
+  color: #6ea8ff;
+  border-bottom-color: #6ea8ff;
+}
+
+[data-theme="dark"] a.git-command:hover {
+  color: #9cc4ff;
+}
+
 .lesson-theory p {
   margin-bottom: 16px;
   color: var(--text-soft);
@@ -646,6 +802,19 @@ a.lesson-card:hover .lesson-title {
   font-size: 0.9em;
 }
 
+/* Клавиши в тексте урока: «нажмите Ctrl + `». */
+.lesson-theory kbd {
+  padding: 1px 5px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: var(--bg-soft);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  white-space: nowrap;
+}
+
 .lesson-theory .lesson-tip {
   margin-top: 28px;
   padding: 14px 16px;
@@ -654,6 +823,53 @@ a.lesson-card:hover .lesson-title {
   background: var(--bg-soft);
   color: var(--text-soft);
   font-size: 14.5px;
+}
+
+/* Шпаргалка «терминал против кнопок»: таблица в колонке теории. */
+.lesson-table {
+  margin: 0 0 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+
+.lesson-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.lesson-table th,
+.lesson-table td {
+  padding: 9px 10px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+  /* Команды и названия кнопок переносятся, иначе таблица ломает колонку. */
+  overflow-wrap: anywhere;
+}
+
+.lesson-table thead th {
+  border-top: 0;
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  color: var(--text-faint);
+  font-size: 10.5px;
+  font-weight: 640;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lesson-table tbody th {
+  width: 31%;
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.lesson-table td {
+  color: var(--text-soft);
 }
 
 .lesson-steps {
@@ -714,7 +930,7 @@ a.lesson-card:hover .lesson-title {
 
 .task {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   color: var(--text-soft);
   font-size: 13.5px;
@@ -727,6 +943,7 @@ a.lesson-card:hover .lesson-title {
   place-items: center;
   width: 16px;
   height: 16px;
+  margin-top: 1px;
   border: 1.5px solid var(--border-strong);
   border-radius: 50%;
   color: transparent;
@@ -748,7 +965,54 @@ a.lesson-card:hover .lesson-title {
   min-width: 0;
   color: inherit;
   font-size: 13px;
-  line-height: 1.35;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+/* Команда в чек-листе: единый моноширинный вид во всех уроках. */
+.task .task-label code {
+  padding: 1px 5px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+/* Урок без практики: вместо чек-листа кнопка «Я прочитал». */
+.reading-cta {
+  margin-top: 24px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+}
+
+.reading-cta-note {
+  margin-bottom: 12px;
+  color: var(--text-soft);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.reading-cta .btn {
+  width: 100%;
+}
+
+/* Блок с примером кода: маркеры конфликта, вывод команд. */
+.lesson-code {
+  margin: 16px 0;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-soft);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.7;
+  white-space: pre;
+  overflow-x: auto;
 }
 
 /* Терминал намеренно тёмный в обеих темах. */
@@ -1016,6 +1280,13 @@ a.lesson-card:hover .lesson-title {
   background: #e9edf2;
 }
 
+/* Копия строки, которая улетает при git restore: держит фон панели. */
+.file-row--ghost {
+  background: #f7f8fa;
+  list-style: none;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+}
+
 .file-icon {
   display: inline-flex;
   flex: none;
@@ -1065,6 +1336,58 @@ a.lesson-card:hover .lesson-title {
   background: #dcf5e3;
   color: #146c2e;
   font-weight: 700;
+}
+
+/* Файл из списка .gitignore: лежит на диске, но Git его не видит. */
+.file-row--ignored .file-name {
+  color: #9aa2ad;
+}
+
+.file-row--ignored .file-icon {
+  opacity: 0.45;
+}
+
+.file-badge[data-status="ignored"] {
+  background: repeating-linear-gradient(
+    135deg,
+    #e9ecf1 0 4px,
+    #f2f4f7 4px 8px
+  );
+  color: #8a919b;
+}
+
+/* Блок Stash: спрятанные изменения выглядят скромнее рабочих файлов. */
+.explorer--stash {
+  border-style: dashed;
+  background: #fbfbfd;
+}
+
+.file-row--stashed .file-name {
+  color: #5b636e;
+}
+
+.file-row--stashed .file-icon {
+  opacity: 0.6;
+}
+
+.file-badge[data-status="stashed"] {
+  background: #e9e6ff;
+  color: #5b47b6;
+}
+
+/* Файл убран из индекса (git rm --cached), но остался на компьютере. */
+.file-row--on-disk .file-name {
+  color: #b42318;
+}
+
+.file-row--on-disk .file-icon {
+  opacity: 0.75;
+}
+
+.file-badge[data-status="on-disk"] {
+  background: #fde4e1;
+  color: #b42318;
+  font-weight: 600;
 }
 
 /* Коммиты в третьей панели */
@@ -1134,6 +1457,48 @@ a.lesson-card:hover .lesson-title {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+/* Коммит, вернувшийся из журнала HEAD (reflog). */
+@keyframes commit-return {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.commit-card--returned {
+  animation: commit-return 420ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .commit-card--returned {
+    animation: none;
+  }
+}
+
+/* Плашка версии рядом с коммитом в панели Local Repository. */
+.commit-tag {
+  display: inline-block;
+  padding: 1px 8px;
+  border: 1px solid rgba(29, 78, 216, 0.25);
+  border-radius: 999px;
+  background: #e3edff;
+  color: #1d4ed8;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+[data-theme="dark"] .commit-tag {
+  border-color: rgba(147, 184, 255, 0.32);
+  background: rgba(59, 130, 246, 0.18);
+  color: #9dc0ff;
 }
 
 .commit-pushed {
@@ -1342,6 +1707,311 @@ a.lesson-card:hover .lesson-title {
   transform: none;
 }
 
+/* ---------- Финальный экран последнего урока ---------- */
+.final-screen {
+  position: relative;
+  margin-top: 48px;
+  padding: 56px 32px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      color-mix(in srgb, var(--accent) 12%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 80% 0%,
+      color-mix(in srgb, #7c3aed 12%, transparent),
+      transparent 55%
+    ),
+    var(--surface);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  animation: final-in 560ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.final-screen[hidden] {
+  display: none;
+}
+
+@keyframes final-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.final-eyebrow {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 4px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.final-title {
+  font-size: clamp(2rem, 5.4vw, 3.1rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.final-text {
+  max-width: 30ch;
+  margin: 16px auto 0;
+  color: var(--text-soft);
+  font-size: clamp(1.05rem, 2.2vw, 1.375rem);
+  line-height: 1.5;
+}
+
+.final-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.final-actions .btn {
+  min-height: 48px;
+  padding-inline: 28px;
+  font-size: 16px;
+}
+
+/* Конфетти: холст поверх страницы, кликов не перехватывает. */
+.confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+}
+
+.confetti[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .final-screen {
+    animation: none;
+  }
+}
+
+/* ---------- Бонусный урок: панель Source Control (VS Code) ---------- */
+/* Панель живёт в правой колонке рядом с теорией и «прилипает» при прокрутке:
+   читаешь шаг слева — видишь панель справа. */
+.vscode-panel {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  overflow: hidden;
+  border: 1px solid #1b1b1b;
+  border-radius: var(--radius);
+  background: #252526;
+  color: #cccccc;
+  font-size: 13px;
+  box-shadow: var(--shadow-md);
+}
+
+.vscode-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #1e1e1e;
+  border-bottom: 1px solid #333333;
+}
+
+.vscode-ico {
+  width: 15px;
+  height: 15px;
+  color: #0078d4;
+  flex: none;
+}
+
+.vscode-title {
+  flex: 1;
+  color: #e7e7e7;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.vscode-count {
+  min-width: 20px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: #4d4d4d;
+  color: #ffffff;
+  font-size: 11px;
+  text-align: center;
+}
+
+.vscode-body {
+  padding: 12px 0 16px;
+}
+
+.vscode-repo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px 10px;
+  color: #e7e7e7;
+  font-weight: 600;
+}
+
+.vscode-branch {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #3c3c3c;
+  color: #cccccc;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.vscode-message {
+  margin: 0 14px;
+  padding: 7px 10px;
+  border: 1px solid #3c3c3c;
+  border-radius: 4px;
+  background: #3c3c3c;
+  color: #9d9d9d;
+  font-size: 12px;
+}
+
+.vscode-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 14px 14px;
+}
+
+.vscode-btn {
+  padding: 5px 12px;
+  border-radius: 3px;
+  background: #0e639c;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.vscode-btn--ghost {
+  background: #3a3d41;
+  color: #cccccc;
+}
+
+.vscode-section-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-top: 1px solid #333333;
+  color: #bbbbbb;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.vscode-section-head .vscode-count {
+  background: #4d4d4d;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.vscode-list {
+  padding: 2px 0 6px;
+}
+
+.vscode-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px;
+  color: #cccccc;
+}
+
+.vscode-row:hover {
+  background: #2a2d2e;
+}
+
+.vscode-file {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vscode-letter {
+  color: #e2c08d;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vscode-plus {
+  width: 16px;
+  color: #cccccc;
+  font-weight: 600;
+  text-align: center;
+  opacity: 0;
+}
+
+.vscode-row:hover .vscode-plus {
+  opacity: 1;
+}
+
+.vscode-empty {
+  padding: 4px 14px 8px;
+  color: #8a8a8a;
+  font-style: italic;
+}
+
+/* Уведомление о коммите — как всплывающее окно VS Code. */
+.toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 80;
+  max-width: min(360px, calc(100vw - 48px));
+  padding: 12px 18px;
+  border: 1px solid #0e639c;
+  border-radius: 6px;
+  background: #252526;
+  color: #e7e7e7;
+  font-size: 13px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.toast[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition: none;
+  }
+}
+
 /* ---------- Адаптив ---------- */
 @media (max-width: 720px) {
   .hero {
@@ -1397,6 +2067,12 @@ a.lesson-card:hover .lesson-title {
     grid-column: 1 / -1;
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+  /* Панель VS Code в узкую колонку не влезает — уводим её под теорию. */
+  .vscode-panel {
+    grid-column: 1 / -1;
+    position: static;
+  }
 }
 
 @media (max-width: 900px) {
@@ -1419,6 +2095,16 @@ a.lesson-card:hover .lesson-title {
 }
 
 @media (max-width: 560px) {
+  /* Шпаргалка на телефоне: три колонки влезают только «плотнее». */
+  .lesson-table table {
+    font-size: 12px;
+  }
+
+  .lesson-table th,
+  .lesson-table td {
+    padding: 7px 8px;
+  }
+
   .lesson-actions {
     flex-direction: column;
     align-items: stretch;

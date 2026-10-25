@@ -57,7 +57,6 @@
   <main id="main" class="lesson-main">
     <header class="lesson-head">
       <p class="eyebrow">Урок 05 · 5 минут</p>
-      <h1>Ветвление</h1>
       <p class="lesson-lead">
         Создаём ветку для эксперимента и переключаемся на неё, не трогая
         главную линию разработки.
@@ -66,7 +65,13 @@
 
     <div class="lesson-layout">
       <article class="lesson-theory">
-        <h2>Зачем нужны ветки</h2>
+        <h2 class="theory-title">Урок 5. Ветвление</h2>
+        <aside class="lesson-note" aria-label="Зачем это нужно?">
+          <p class="lesson-note-title"><span class="lesson-note-badge">NOTE</span> Зачем это нужно?</p>
+          <p>Ветка — безопасный способ попробовать идею: эксперимент живёт отдельно, а стабильная версия остаётся целой. Если что-то пойдёт не так, главную линию не придётся восстанавливать.</p>
+        </aside>
+
+        <h3>Зачем нужны ветки</h3>
         <p>
           Ветка — это отдельная линия разработки. Основная ветка обычно
           называется <code>master</code> (или <code>main</code>) и хранит
@@ -74,16 +79,24 @@
         </p>
         <p>
           Для эксперимента создают новую ветку: в ней можно свободно менять
-          файлы, а основная останется нетронутой. <code>git branch</code>
-          создаёт ветку, <code>git checkout</code> переключает на неё.
+          файлы, а основная останется нетронутой.
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Ветвление-в-Git-О-ветвлении-в-двух-словах" target="_blank" rel="noopener noreferrer">git branch</a>
+          создаёт ветку,
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Ветвление-в-Git-О-ветвлении-в-двух-словах" target="_blank" rel="noopener noreferrer">git checkout</a>
+          переключает на неё.
         </p>
         <ol class="lesson-steps">
-          <li><code>git branch feature</code> — создать ветку feature.</li>
           <li>
-            <code>git checkout feature</code> — переключиться на неё.
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Ветвление-в-Git-О-ветвлении-в-двух-словах" target="_blank" rel="noopener noreferrer">git branch feature</a>
+            — создать ветку feature.
           </li>
           <li>
-            <code>git status</code> — убедиться, что вы на ветке feature.
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Ветвление-в-Git-О-ветвлении-в-двух-словах" target="_blank" rel="noopener noreferrer">git checkout feature</a>
+            — переключиться на неё.
+          </li>
+          <li>
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git status</a>
+            — убедиться, что вы на ветке feature.
           </li>
         </ol>
         <p class="lesson-tip">
@@ -93,21 +106,21 @@
 
         <section class="tasks" aria-labelledby="tasks-title">
           <div class="tasks-head">
-            <h2 class="tasks-title" id="tasks-title">Задачи урока</h2>
+            <h3 class="tasks-title" id="tasks-title">Задачи урока</h3>
             <span class="tasks-count" data-tasks-count>0/3</span>
           </div>
           <ul class="tasks-list" data-tasks>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Создать ветку feature (команда git branch)</span>
+              <span class="task-label">Выполнить команду: <code>git branch feature</code></span>
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Переключиться на ветку feature (команда git checkout)</span>
+              <span class="task-label">Выполнить команду: <code>git checkout feature</code></span>
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Убедиться, что вы на ветке feature (команда git status)</span>
+              <span class="task-label">Выполнить команду: <code>git status</code></span>
             </li>
           </ul>
         </section>
@@ -215,14 +228,16 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>GitУчебник · открытый проект</p>
+      <p class="footer-credit">
+        Разработано <a class="footer-link" href="https://github.com/DNKlyosov" target="_blank" rel="noopener noreferrer">DNKlyosov</a> © 2026
+      </p>
       <div class="footer-actions">
+        <p class="footer-feedback">
+          Нашли ошибку или есть идея?
+          <a class="footer-link" href="https://github.com/DNKlyosov/git-tutorial/issues/new" target="_blank" rel="noopener noreferrer">Оставить отзыв на GitHub</a>
+        </p>
         <button class="footer-reset" type="button" data-reset-progress>Сбросить прогресс</button>
-        <span class="footer-meta">HTML · CSS · JS без зависимостей</span>
       </div>
-    </div>
-    <div class="container footer-dev">
-      <button class="footer-dev-link" type="button" data-reset-progress-silent>Очистить кэш урока (только для тестов)</button>
     </div>
   </footer>
 

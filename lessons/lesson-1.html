@@ -25,7 +25,7 @@
     })();
   </script>
 </head>
-<body class="page-lesson" data-lesson-id="lesson-1" data-lesson-goals='["git config --global user.name \"Student\"","git config --global user.email \"student@example.com\"","git init","git status"]'>
+<body class="page-lesson" data-lesson-id="lesson-1" data-lesson-goals='["git --version","git config --global user.name \"Student\"","git config --global user.email \"student@example.com\"","git init","git status"]'>
   <a class="skip-link" href="#main">Перейти к содержимому</a>
 
   <header class="site-header">
@@ -58,37 +58,64 @@
   <main id="main" class="lesson-main">
     <header class="lesson-head">
       <p class="eyebrow">Урок 01 · 5 минут</p>
-      <h1>Введение в Git</h1>
       <p class="lesson-lead">
-        Знакомимся с Git: представляемся, создаём репозиторий и проверяем
-        его состояние — база для всех следующих уроков.
+        Знакомимся с Git: представляемся командой
+        <a class="git-command" href="https://git-scm.com/book/ru/v2/Введение-Первоначальная-настройка-Git" target="_blank" rel="noopener noreferrer">git config</a>,
+        создаём репозиторий через
+        <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Создание-Git-репозитория" target="_blank" rel="noopener noreferrer">git init</a>
+        и проверяем состояние
+        <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git status</a>
+        — база для всех следующих уроков.
       </p>
     </header>
 
     <div class="lesson-layout">
       <article class="lesson-theory">
-        <h2>Представьтесь и создайте репозиторий</h2>
+        <h2 class="theory-title">Урок 1. Введение в Git</h2>
+        <aside class="lesson-note lesson-note--important" aria-label="Предварительные требования">
+          <p class="lesson-note-title"><span class="lesson-note-badge">IMPORTANT</span> Предварительные требования</p>
+          <p>Прежде чем начать, убедитесь, что Git установлен на вашем компьютере. Скачать его можно с официального сайта:</p>
+          <a class="btn-download" href="https://git-scm.com/downloads" target="_blank" rel="noopener noreferrer" style="background-color: #f05032;">Скачать Git</a>
+          <p>Проверить установку можно командой <a class="git-command" href="https://git-scm.com/book/ru/v2/Введение-Установка-Git" target="_blank" rel="noopener noreferrer">git --version</a> в терминале.</p>
+        </aside>
+
+        <aside class="lesson-note" aria-label="Зачем это нужно?">
+          <p class="lesson-note-title"><span class="lesson-note-badge">NOTE</span> Зачем это нужно?</p>
+          <p>Git записывает автора в каждый коммит, поэтому без имени и почты он просто не даст сохранить изменения. Первый репозиторий и проверка статуса — минимальный набор, на котором держатся все остальные уроки курса.</p>
+        </aside>
+
+        <h3>Представьтесь и создайте репозиторий</h3>
         <p>
           Перед первым коммитом Git должен знать, кто автор изменений. Имя и
           email записываются в каждый коммит, поэтому сначала представимся
-          командой <code>git config</code>. Без этого Git не даст сохранить
-          изменения.
+          командой
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Введение-Первоначальная-настройка-Git" target="_blank" rel="noopener noreferrer">git config</a>.
+          Без этого Git не даст сохранить изменения.
         </p>
         <p>
-          Затем <code>git init</code> создаёт репозиторий и папку
-          <code>.git</code>, а <code>git status</code> показывает ветку и
-          состояние файлов.
+          Затем
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Создание-Git-репозитория" target="_blank" rel="noopener noreferrer">git init</a>
+          создаёт репозиторий и папку <code>.git</code>, а
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git status</a>
+          показывает ветку и состояние файлов.
         </p>
         <ol class="lesson-steps">
           <li>
-            <code>git config --global user.name "Student"</code> — имя автора.
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Введение-Первоначальная-настройка-Git" target="_blank" rel="noopener noreferrer">git config --global user.name "Student"</a>
+            — имя автора.
           </li>
           <li>
-            <code>git config --global user.email "student@example.com"</code>
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Введение-Первоначальная-настройка-Git" target="_blank" rel="noopener noreferrer">git config --global user.email "student@example.com"</a>
             — почта автора.
           </li>
-          <li><code>git init</code> — создать репозиторий.</li>
-          <li><code>git status</code> — проверить состояние файлов.</li>
+          <li>
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Создание-Git-репозитория" target="_blank" rel="noopener noreferrer">git init</a>
+            — создать репозиторий.
+          </li>
+          <li>
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git status</a>
+            — проверить состояние файлов.
+          </li>
         </ol>
         <p class="lesson-tip">
           После настройки в шапке появится имя Student. Прогресс сохраняется:
@@ -97,21 +124,25 @@
 
         <section class="tasks" aria-labelledby="tasks-title">
           <div class="tasks-head">
-            <h2 class="tasks-title" id="tasks-title">Задачи урока</h2>
-            <span class="tasks-count" data-tasks-count>0/4</span>
+            <h3 class="tasks-title" id="tasks-title">Задачи урока</h3>
+            <span class="tasks-count" data-tasks-count>0/5</span>
           </div>
           <ul class="tasks-list" data-tasks>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Настроить имя автора (git config user.name "Student")</span>
+              <span class="task-label">Проверить версию Git</span>
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Настроить email автора (git config user.email)</span>
+              <span class="task-label">Настроить имя пользователя (user.name)</span>
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Создать репозиторий (git init)</span>
+              <span class="task-label">Настроить email (user.email)</span>
+            </li>
+            <li class="task">
+              <span class="task-check" aria-hidden="true"></span>
+              <span class="task-label">Инициализировать репозиторий (git init)</span>
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
@@ -127,10 +158,11 @@
           <span class="terminal-dot terminal-dot--min"></span>
           <span class="terminal-dot terminal-dot--max"></span>
           <span class="terminal-title">terminal — ~/git-tutorial</span>
+          <span class="terminal-branch" data-branch hidden>master</span>
         </div>
         <div class="terminal-body" data-terminal-body>
           <div class="terminal-history" data-terminal-history role="log" aria-live="polite" aria-label="История команд">
-            <p class="terminal-line terminal-comment">Представьтесь: git config --global user.name "Student" и git config --global user.email "student@example.com". Затем git init и git status.</p>
+            <p class="terminal-line terminal-comment">Проверьте установку: git --version. Затем представьтесь: git config --global user.name "Student" и git config --global user.email "student@example.com". Дальше — git init и git status.</p>
           </div>
           <div class="terminal-input-line">
             <span class="terminal-prompt" data-terminal-prompt aria-hidden="true">user@git-tutorial:~$</span>
@@ -228,14 +260,16 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>GitУчебник · открытый проект</p>
+      <p class="footer-credit">
+        Разработано <a class="footer-link" href="https://github.com/DNKlyosov" target="_blank" rel="noopener noreferrer">DNKlyosov</a> © 2026
+      </p>
       <div class="footer-actions">
+        <p class="footer-feedback">
+          Нашли ошибку или есть идея?
+          <a class="footer-link" href="https://github.com/DNKlyosov/git-tutorial/issues/new" target="_blank" rel="noopener noreferrer">Оставить отзыв на GitHub</a>
+        </p>
         <button class="footer-reset" type="button" data-reset-progress>Сбросить прогресс</button>
-        <span class="footer-meta">HTML · CSS · JS без зависимостей</span>
       </div>
-    </div>
-    <div class="container footer-dev">
-      <button class="footer-dev-link" type="button" data-reset-progress-silent>Очистить кэш урока (только для тестов)</button>
     </div>
   </footer>
 

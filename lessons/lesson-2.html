@@ -58,16 +58,22 @@
   <main id="main" class="lesson-main">
     <header class="lesson-head">
       <p class="eyebrow">Урок 02 · 5 минут</p>
-      <h1>Добавление файлов</h1>
       <p class="lesson-lead">
         Создаём файл через <code>touch</code> и готовим его к коммиту командой
-        <code>git add</code>. Разбираемся, зачем нужен индекс.
+        <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git add</a>.
+        Разбираемся, зачем нужен индекс.
       </p>
     </header>
 
     <div class="lesson-layout">
       <article class="lesson-theory">
-        <h2>Четыре шага от файла до индекса</h2>
+        <h2 class="theory-title">Урок 2. Добавление файлов</h2>
+        <aside class="lesson-note" aria-label="Зачем это нужно?">
+          <p class="lesson-note-title"><span class="lesson-note-badge">NOTE</span> Зачем это нужно?</p>
+          <p>Git не начинает следить за файлом сам: новый файл остаётся «неотслеживаемым», пока вы не добавите его в индекс. Индекс — черновик будущего коммита, и в нём легко проверить, что именно попадёт в историю.</p>
+        </aside>
+
+        <h3>Четыре шага от файла до индекса</h3>
         <p>
           В проекте уже есть <code>index.html</code> — главная страница. Теперь
           добавим новую страницу <code>about.html</code> («О нас») и проследим,
@@ -84,15 +90,16 @@
             покажет её как <code>untracked</code>.
           </li>
           <li>
-            <code>git status</code> — проверить, что файл попал в раздел
-            <em>Untracked files</em>.
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git status</a>
+            — проверить, что файл попал в раздел <em>Untracked files</em>.
           </li>
           <li>
-            <code>git add about.html</code> — перенести файл в индекс
-            (staging area).
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git add about.html</a>
+            — перенести файл в индекс (staging area).
           </li>
           <li>
-            <code>git status</code> — снова проверить статус: файл теперь в
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git status</a>
+            — снова проверить статус: файл теперь в
             <em>Changes to be committed</em>.
           </li>
         </ol>
@@ -100,30 +107,32 @@
           Если репозиторий не инициализирован, терминал предупредит:
           «Репозиторий не инициализирован! Вернитесь в Урок 1 или введите
           git init». Шаги засчитываются строго по порядку — второй
-          <code>git status</code> сработает только после <code>git add</code>.
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git status</a>
+          сработает только после
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git add</a>.
         </p>
 
         <section class="tasks" aria-labelledby="tasks-title">
           <div class="tasks-head">
-            <h2 class="tasks-title" id="tasks-title">Задачи урока</h2>
+            <h3 class="tasks-title" id="tasks-title">Задачи урока</h3>
             <span class="tasks-count" data-tasks-count>0/4</span>
           </div>
           <ul class="tasks-list" data-tasks>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Создать файл about.html (команда touch)</span>
+              <span class="task-label">Выполнить команду: <code>touch about.html</code></span>
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Проверить статус: файл в Untracked (команда git status)</span>
+              <span class="task-label">Выполнить команду: <code>git status</code></span>
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Добавить файл в индекс (команда git add)</span>
+              <span class="task-label">Выполнить команду: <code>git add about.html</code></span>
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Проверить статус: файл в Staged (команда git status)</span>
+              <span class="task-label">Выполнить команду: <code>git status</code></span>
             </li>
           </ul>
         </section>
@@ -135,6 +144,7 @@
           <span class="terminal-dot terminal-dot--min"></span>
           <span class="terminal-dot terminal-dot--max"></span>
           <span class="terminal-title">terminal — ~/git-tutorial</span>
+          <span class="terminal-branch" data-branch hidden>master</span>
         </div>
         <div class="terminal-body" data-terminal-body>
           <div class="terminal-history" data-terminal-history role="log" aria-live="polite" aria-label="История команд">
@@ -230,14 +240,16 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>GitУчебник · открытый проект</p>
+      <p class="footer-credit">
+        Разработано <a class="footer-link" href="https://github.com/DNKlyosov" target="_blank" rel="noopener noreferrer">DNKlyosov</a> © 2026
+      </p>
       <div class="footer-actions">
+        <p class="footer-feedback">
+          Нашли ошибку или есть идея?
+          <a class="footer-link" href="https://github.com/DNKlyosov/git-tutorial/issues/new" target="_blank" rel="noopener noreferrer">Оставить отзыв на GitHub</a>
+        </p>
         <button class="footer-reset" type="button" data-reset-progress>Сбросить прогресс</button>
-        <span class="footer-meta">HTML · CSS · JS без зависимостей</span>
       </div>
-    </div>
-    <div class="container footer-dev">
-      <button class="footer-dev-link" type="button" data-reset-progress-silent>Очистить кэш урока (только для тестов)</button>
     </div>
   </footer>
 

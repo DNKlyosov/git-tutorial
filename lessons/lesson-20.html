@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Git в команде — GitУчебник</title>
+  <meta name="description" content="Двадцатый урок: как работают в командах — классический Git Flow и Trunk-Based Development, и когда что выбирать.">
+  <meta name="theme-color" content="#fbfbf9">
+  <link rel="stylesheet" href="../style.css">
+  <script>
+    (function () {
+      var theme = null;
+      try {
+        theme = localStorage.getItem("git-tutorial:theme");
+      } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+<body class="page-lesson" data-lesson-id="lesson-20" data-lesson-goals='[]'>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="На главную">
+        <span class="brand-mark" aria-hidden="true">◆</span>
+        <span class="brand-text">Git<em>Учебник</em></span>
+      </a>
+
+      <nav class="site-nav" aria-label="Основная навигация">
+        <a href="../index.html#lessons" class="nav-link">Все уроки</a>
+        <span class="user-chip" data-user hidden>
+          <span class="user-avatar" data-user-avatar aria-hidden="true">?</span>
+          <span class="user-name" data-user-name></span>
+        </span>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Переключить тему">
+          <svg class="theme-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4.2"></circle>
+            <path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.3 5.3l1.9 1.9M16.8 16.8l1.9 1.9M18.7 5.3l-1.9 1.9M7.2 16.8l-1.9 1.9"></path>
+          </svg>
+          <svg class="theme-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2Z"></path>
+          </svg>
+          <span class="theme-label">Светлая</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="lesson-main">
+    <header class="lesson-head">
+      <p class="eyebrow">Урок 20 · 8 минут · финал курса</p>
+      <p class="lesson-lead">
+        Как договариваются о ветках: строгий Git Flow и современный
+        Trunk-Based Development — и как понять, что подходит вашему проекту.
+      </p>
+    </header>
+
+    <div class="lesson-layout">
+      <article class="lesson-theory">
+        <h2 class="theory-title">Урок 20. Git в команде</h2>
+        <aside class="lesson-note" aria-label="Зачем это нужно?">
+          <p class="lesson-note-title"><span class="lesson-note-badge">NOTE</span> Зачем это нужно?</p>
+          <p>В команде важно заранее договориться, как живут ветки. Схема подсказывает, где собирать изменения и когда выпускать релиз, — и помогает не спорить об этом в каждом пулле.</p>
+        </aside>
+
+        <h3>Зачем договариваться о ветках</h3>
+        <p>
+          Ветки — дешёвый инструмент, и именно поэтому команды договариваются,
+          какими ветками пользуются. Схема определяет, где живёт готовая
+          работа, сколько живёт ветка и кто и когда сливает её обратно.
+        </p>
+        <p>
+          Все схемы — крайние точки одного отрезка: длинные ветки с редкими
+          слияниями или одна ветка с частыми маленькими коммитами.
+        </p>
+
+        <h3>Классический Git Flow</h3>
+        <p>
+          Появился в 2010 году для продуктов с релизами. Ролей у веток много:
+        </p>
+        <ul class="lesson-list">
+          <li><code>main</code> — только релизы, каждая точка истории здесь стабильна.</li>
+          <li><code>develop</code> — интеграция всех готовых задач.</li>
+          <li><code>feature/*</code> — одна задача, живёт до вливания в <code>develop</code>.</li>
+          <li><code>release/*</code> — стабилизация перед выпуском.</li>
+          <li><code>hotfix/*</code> — срочная правка прямо в <code>main</code>.</li>
+        </ul>
+        <pre class="lesson-code">main       ●───────────●──────────●     релизы и теги
+            ╲         ╱ ╲        ╱
+develop      ●──●──●──●───●──●──●       интеграция
+                ╲
+feature/*        ●──●                   одна задача — одна ветка</pre>
+        <p>
+          Плюсы: строгий порядок, предсказуемые релизы, всегда есть ветка
+          для срочной правки. Минусы: много сущностей, долгие слияния
+          и ощутимый разрыв между работой и <code>main</code>.
+        </p>
+
+        <h3>Trunk-Based Development</h3>
+        <p>
+          Современная альтернатива: одна долгоживущая ветка (trunk, обычно
+          <code>main</code>), а все изменения попадают в неё короткими
+          порциями — через прямые коммиты или ветки, живущие часы, максимум
+          день.
+        </p>
+        <p>
+          Чтобы это работало, нужны три вещи: быстрый CI, который проверяет
+          каждый коммит (урок 17), ревью до вливания и
+          <code>feature flags</code> — переключатели, скрывающие недоделанную
+          функциональность.
+        </p>
+        <p>
+          Плюсы: почти нет конфликтов, релиз можно выпустить в любой момент.
+          Минусы: без автоматизации и флагов всё быстро ломается.
+        </p>
+        <p>
+          Между ними есть <strong>GitHub Flow</strong> — компромисс, на
+          котором живёт большинство открытых проектов: одна <code>main</code>,
+          небольшая ветка под задачу, pull request, ревью, merge и удаление
+          ветки.
+        </p>
+
+        <h3>Что выбрать</h3>
+        <ul class="lesson-list">
+          <li>Частые релизы, сервисы и веб: Trunk-Based или GitHub Flow.</li>
+          <li>Мобильные приложения, игры, продукты с ручной приёмкой: Git Flow с <code>release/*</code>.</li>
+          <li>Библиотеки с поддержкой нескольких версий: долгоживущие ветки версий плюс <code>main</code>.</li>
+        </ul>
+        <p>
+          Главное — не название схемы, а регулярность: короткие ветки,
+          понятные сообщения коммитов, ревью и зелёные проверки. Всё это
+          складывается из простых команд, которые вы уже прошли:
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git add</a>,
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git commit</a>,
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Ветвление-в-Git-О-ветвлении-в-двух-словах" target="_blank" rel="noopener noreferrer">git merge</a>,
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Работа-с-тегами" target="_blank" rel="noopener noreferrer">git tag</a>.
+        </p>
+        <p class="lesson-tip">
+          Это финальный урок: новых команд нет, в терминале доступны только
+          <code>help</code> и <code>clear</code>. Дочитайте теорию и нажмите
+          кнопку внизу — откроется поздравление.
+        </p>
+
+        <div class="reading-cta">
+          <p class="reading-cta-note">
+            Это последний урок курса. Отметьте, что материал прочитан, чтобы
+            увидеть финал.
+          </p>
+          <button class="btn btn-primary" type="button" data-read-done>
+            Завершить курс
+          </button>
+        </div>
+      </article>
+
+      <aside class="terminal" data-terminal aria-label="Терминал урока">
+        <div class="terminal-bar" aria-hidden="true">
+          <span class="terminal-dot terminal-dot--close"></span>
+          <span class="terminal-dot terminal-dot--min"></span>
+          <span class="terminal-dot terminal-dot--max"></span>
+          <span class="terminal-title">terminal — ~/git-tutorial</span>
+          <span class="terminal-branch" data-branch hidden>master</span>
+        </div>
+        <div class="terminal-body" data-terminal-body>
+          <div class="terminal-history" data-terminal-history role="log" aria-live="polite" aria-label="История команд">
+            <p class="terminal-line terminal-comment">Урок теоретический. Доступны только help и clear — остальное уже сделано в предыдущих уроках.</p>
+          </div>
+          <div class="terminal-input-line">
+            <span class="terminal-prompt" data-terminal-prompt aria-hidden="true">user@git-tutorial:~$</span>
+            <input
+              class="terminal-input"
+              data-terminal-input
+              id="lesson-terminal-input"
+              type="text"
+              aria-label="Введите команду"
+              autocomplete="off"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+              enterkeyhint="send"
+            >
+          </div>
+        </div>
+      </aside>
+
+      <aside class="dashboard" aria-label="Дашборд состояния репозитория">
+        <section class="explorer">
+          <header class="explorer-bar">
+            <svg class="explorer-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M1.6 4h4.3l1.3 1.7h7.2v7.1H1.6z" fill="currentColor" opacity="0.85"></path>
+            </svg>
+            <h2 class="explorer-title" title="Working Directory (VS Code)">Working Directory (VS Code)</h2>
+            <span class="explorer-count" data-count="workdir">0</span>
+          </header>
+          <ul class="file-list" data-list="workdir" aria-label="Файлы рабочей директории"></ul>
+        </section>
+
+        <section class="explorer">
+          <header class="explorer-bar">
+            <svg class="explorer-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M1.6 4h4.3l1.3 1.7h7.2v7.1H1.6z" fill="currentColor" opacity="0.85"></path>
+            </svg>
+            <h2 class="explorer-title" title="Staging Area (Git Index)">Staging Area (Git Index)</h2>
+            <span class="explorer-count" data-count="staged">0</span>
+          </header>
+          <ul class="file-list" data-list="staged" aria-label="Файлы в индексе"></ul>
+        </section>
+
+        <section class="explorer">
+          <header class="explorer-bar">
+            <svg class="explorer-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M1.6 4h4.3l1.3 1.7h7.2v7.1H1.6z" fill="currentColor" opacity="0.85"></path>
+            </svg>
+            <h2 class="explorer-title" title="Local Repository (Commits)">Local Repository (Commits)</h2>
+            <span class="explorer-count" data-count="repo">0</span>
+          </header>
+          <ul class="file-list" data-list="repo" aria-label="Коммиты"></ul>
+        </section>
+      </aside>
+    </div>
+
+    <section class="remote" aria-labelledby="remote-title">
+      <header class="explorer-bar remote-bar">
+        <svg class="explorer-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M1.6 4h4.3l1.3 1.7h7.2v7.1H1.6z" fill="currentColor" opacity="0.85"></path>
+        </svg>
+        <h2 class="explorer-title" id="remote-title">Remote Repository (GitHub)</h2>
+        <span class="explorer-count" data-count="remote">0</span>
+      </header>
+
+      <div class="gh-profile">
+        <span class="gh-avatar" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" focusable="false">
+            <circle cx="8" cy="5.2" r="2.5"></circle>
+            <path d="M3 13.6c.5-2.7 2.5-4 5-4s4.5 1.3 5 4"></path>
+          </svg>
+        </span>
+        <span class="gh-repo">
+          <span class="gh-owner">user</span><span class="gh-sep">/</span><strong>my-git-project</strong>
+        </span>
+        <span class="gh-public">Public</span>
+        <span class="gh-remote-url" data-remote-url title="Remote URL не задан">origin не настроен</span>
+      </div>
+
+      <ul class="gh-commits" data-list="remote" aria-label="Коммиты на GitHub"></ul>
+    </section>
+
+    <section class="final-screen" data-final-screen hidden aria-labelledby="final-title">
+      <p class="final-eyebrow">Курс завершён</p>
+      <h2 class="final-title" id="final-title">🎉 Поздравляем!</h2>
+      <p class="final-text">
+        Вы прошли курс по Git. Теперь вы готовы к реальным проектам
+      </p>
+      <div class="final-actions">
+        <a class="btn btn-primary" href="../index.html">На главную</a>
+        <a class="btn btn-ghost" href="../index.html#lessons">Повторить уроки</a>
+      </div>
+    </section>
+
+    <nav class="lesson-actions" aria-label="Навигация по урокам">
+      <a class="btn btn-ghost" href="lesson-19.html">← Предыдущий урок</a>
+      <button class="btn btn-primary btn--locked" type="button" data-next-lesson="lesson-21.html" disabled title="Сначала отметьте, что прочитали теорию">
+        Бонусный урок →
+      </button>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-credit">
+        Разработано <a class="footer-link" href="https://github.com/DNKlyosov" target="_blank" rel="noopener noreferrer">DNKlyosov</a> © 2026
+      </p>
+      <div class="footer-actions">
+        <p class="footer-feedback">
+          Нашли ошибку или есть идея?
+          <a class="footer-link" href="https://github.com/DNKlyosov/git-tutorial/issues/new" target="_blank" rel="noopener noreferrer">Оставить отзыв на GitHub</a>
+        </p>
+        <button class="footer-reset" type="button" data-reset-progress>Сбросить прогресс</button>
+      </div>
+    </div>
+  </footer>
+
+  <canvas class="confetti" data-confetti hidden aria-hidden="true"></canvas>
+
+  <script src="../script.js" defer></script>
+  <script src="../simulator.js" defer></script>
+</body>
+</html>

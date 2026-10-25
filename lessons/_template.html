@@ -24,7 +24,7 @@
   </script>
   <!-- Стили конкретного урока подключаются здесь, когда появятся. -->
 </head>
-<body class="page-lesson">
+<body class="page-lesson" data-lesson-id="lesson-N">
   <a class="skip-link" href="#main">Перейти к содержимому</a>
 
   <header class="site-header">
@@ -51,25 +51,39 @@
 
   <main id="main" class="lesson-main">
     <header class="lesson-head">
-      <p class="eyebrow">Урок 01 · 5 минут</p>
-      <h1>Название урока</h1>
+      <p class="eyebrow">Урок N · 5 минут</p>
       <p class="lesson-lead">Одно предложение о том, что читатель поймёт в этом уроке.</p>
     </header>
 
     <div class="lesson-layout">
       <article class="lesson-theory">
-        <h2>Подзаголовок теории</h2>
+        <h2 class="theory-title">Урок N. Название урока</h2>
+        <aside class="lesson-note" aria-label="Зачем это нужно?">
+          <p class="lesson-note-title"><span class="lesson-note-badge">NOTE</span> Зачем это нужно?</p>
+          <p>Одно-два предложения: какую проблему решает урок и почему это важно на практике.</p>
+        </aside>
+
+        <h3>Подзаголовок теории</h3>
         <p>
-          Абзац-заглушка: здесь будет объяснение идеи. Держите абзацы короткими —
-          по 3–5 строк, чтобы текст легко сканировался.
+          Абзац-заглушка: объясните идею. Держите абзацы короткими — не больше
+          3–4 предложений, чтобы текст легко сканировался.
         </p>
         <p>
-          Второй абзац: можно добавить пример или команду вроде
-          <code>git status</code>, чтобы сразу перейти от теории к практике.
+          Второй абзац: пример с командой
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git status</a>,
+          чтобы сразу перейти от теории к практике.
         </p>
         <p class="lesson-tip">
           Подсказка: важное замечание, которое читатель не должен пропустить.
         </p>
+
+        <section class="tasks" aria-labelledby="tasks-title">
+          <div class="tasks-head">
+            <h3 class="tasks-title" id="tasks-title">Задачи урока</h3>
+            <span class="tasks-count" data-tasks-count>0/1</span>
+          </div>
+          <ul class="tasks-list" data-tasks></ul>
+        </section>
       </article>
 
       <aside class="terminal" data-terminal aria-label="Терминал урока">
@@ -146,14 +160,16 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>GitУчебник · открытый проект</p>
+      <p class="footer-credit">
+        Разработано <a class="footer-link" href="https://github.com/DNKlyosov" target="_blank" rel="noopener noreferrer">DNKlyosov</a> © 2026
+      </p>
       <div class="footer-actions">
+        <p class="footer-feedback">
+          Нашли ошибку или есть идея?
+          <a class="footer-link" href="https://github.com/DNKlyosov/git-tutorial/issues/new" target="_blank" rel="noopener noreferrer">Оставить отзыв на GitHub</a>
+        </p>
         <button class="footer-reset" type="button" data-reset-progress>Сбросить прогресс</button>
-        <span class="footer-meta">HTML · CSS · JS без зависимостей</span>
       </div>
-    </div>
-    <div class="container footer-dev">
-      <button class="footer-dev-link" type="button" data-reset-progress-silent>Очистить кэш урока (только для тестов)</button>
     </div>
   </footer>
 

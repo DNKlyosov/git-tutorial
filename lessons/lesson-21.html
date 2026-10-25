@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VS Code: терминал и интерфейс — GitУчебник</title>
+  <meta name="description" content="Бонусный урок: терминал и графический интерфейс Git в одном окне — настройка связки с GitHub, шпаргалка «терминал против кнопок» и практика в симуляции.">
+  <meta name="theme-color" content="#fbfbf9">
+  <link rel="stylesheet" href="../style.css">
+  <script>
+    (function () {
+      var theme = null;
+      try {
+        theme = localStorage.getItem("git-tutorial:theme");
+      } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+<body class="page-lesson" data-lesson-id="lesson-21" data-lesson-goals='["git add .","git commit -m \"Update from VS Code\"","git push"]'>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="На главную">
+        <span class="brand-mark" aria-hidden="true">◆</span>
+        <span class="brand-text">Git<em>Учебник</em></span>
+      </a>
+
+      <nav class="site-nav" aria-label="Основная навигация">
+        <a href="../index.html#lessons" class="nav-link">Все уроки</a>
+        <span class="user-chip" data-user hidden>
+          <span class="user-avatar" data-user-avatar aria-hidden="true">?</span>
+          <span class="user-name" data-user-name></span>
+        </span>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Переключить тему">
+          <svg class="theme-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4.2"></circle>
+            <path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.3 5.3l1.9 1.9M16.8 16.8l1.9 1.9M18.7 5.3l-1.9 1.9M7.2 16.8l-1.9 1.9"></path>
+          </svg>
+          <svg class="theme-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2Z"></path>
+          </svg>
+          <span class="theme-label">Светлая</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="lesson-main">
+    <header class="lesson-head">
+      <p class="eyebrow">Бонусный урок · 5 минут</p>
+      <p class="lesson-lead">
+        Терминал и графический интерфейс Git в одном окне: одно и то же
+        действие можно сделать командой или кнопкой — результат одинаковый.
+      </p>
+    </header>
+
+    <div class="lesson-layout">
+      <article class="lesson-theory">
+        <h2 class="theory-title">Урок 21. VS Code: терминал и интерфейс</h2>
+        <aside class="lesson-note" aria-label="Зачем это нужно?">
+          <p class="lesson-note-title"><span class="lesson-note-badge">NOTE</span> Зачем это нужно?</p>
+          <p>VS Code не заставляет выбирать между терминалом и кнопками: оба способа работают с одним и тем же Git. Зная, какая кнопка какую команду выполняет, вы свободно переключаетесь между ними и никогда не «застреваете» в интерфейсе.</p>
+        </aside>
+
+        <h3>Введение и установка</h3>
+        <p>
+          VS Code — это мощный редактор, который объединяет в себе терминал
+          и удобный графический интерфейс для Git. Вы можете использовать то,
+          что вам больше нравится.
+        </p>
+        <p>
+          Скачайте установщик с официального сайта — он сам определит вашу
+          систему, а установка пройдёт с настройками по умолчанию:
+        </p>
+        <a class="btn-download" href="https://code.visualstudio.com/download" target="_blank" rel="noopener noreferrer">Скачать VS Code</a>
+        <p>
+          Отдельно ставить Git не нужно: он уже есть в системе — им мы
+          пользовались во всех предыдущих уроках. Запустите редактор и откройте
+          папку проекта (<strong>File → Open Folder…</strong>, на macOS —
+          <strong>File → Open…</strong>), иначе Git не увидит репозиторий.
+          Терминал открывается внутри редактора по
+          <kbd>Ctrl</kbd> + <kbd>`</kbd> (на macOS — <kbd>Cmd</kbd> +
+          <kbd>`</kbd>) и сразу оказывается в папке проекта.
+        </p>
+
+        <h3>Настройка связки с GitHub</h3>
+        <p>
+          Перед отправкой кода на GitHub VS Code должен знать, кто вы: без этого
+          Git не подпишет коммит вашим именем и не получит доступ к репозиторию.
+          Авторизоваться можно двумя способами — подойдёт любой.
+        </p>
+        <p>
+          <strong>Способ А — через интерфейс.</strong> Нажмите иконку
+          <strong>Accounts</strong> (человечек) в левом нижнем углу и выберите
+          <strong>Sign in with GitHub</strong>. Откроется браузер, где вы
+          разрешите доступ, — и редактор запомнит аккаунт.
+        </p>
+        <p>
+          <strong>Способ Б — через терминал.</strong> Представьтесь Git, как
+          в первом уроке:
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Введение-Первоначальная-настройка-Git" target="_blank" rel="noopener noreferrer">git config --global user.name "Student"</a>
+          и
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Введение-Первоначальная-настройка-Git" target="_blank" rel="noopener noreferrer">git config --global user.email "student@example.com"</a>.
+          При первом
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Работа-с-удалёнными-репозиториями" target="_blank" rel="noopener noreferrer">git push</a>
+          VS Code сам предложит авторизоваться — во всплывающем окне
+          в правом нижнем углу.
+        </p>
+        <p>
+          Способы дополняют друг друга: <code>git config</code> задаёт имя
+          и почту автора коммитов, а Sign in with GitHub даёт доступ
+          к репозиторию. Надёжнее сделать и то, и другое.
+        </p>
+
+        <h3>Шпаргалка: терминал против кнопок</h3>
+        <p>
+          Панель Git в редакторе называется <strong>Source Control</strong>:
+          иконка с тремя кружочками на левой панели (Activity Bar), горячая
+          клавиша <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd>. Внутри —
+          две группы: <em>Changes</em> (рабочая директория) и
+          <em>Staged Changes</em> (индекс). Действия дублируют друг друга:
+          у каждой команды есть кнопка, а у каждой кнопки — команда.
+        </p>
+        <div class="lesson-table">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Действие</th>
+                <th scope="col">Терминал</th>
+                <th scope="col">Кнопки в VS Code</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Проверить статус</th>
+                <td>
+                  <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git status</a>
+                </td>
+                <td>
+                  Иконка <strong>Source Control</strong>: список изменённых
+                  файлов сразу на виду
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Добавить в индекс</th>
+                <td>
+                  <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git add .</a>
+                </td>
+                <td>
+                  Кнопка <strong>+</strong> рядом с файлом (плюс у заголовка
+                  группы — сразу все файлы)
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Сделать коммит</th>
+                <td>
+                  <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git commit -m "…"</a>
+                </td>
+                <td>
+                  Ввести текст в поле сообщения и нажать галочку
+                  <strong>✓ Commit</strong>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">Отправить на GitHub</th>
+                <td>
+                  <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Работа-с-удалёнными-репозиториями" target="_blank" rel="noopener noreferrer">git push</a>
+                </td>
+                <td>
+                  <strong>Sync Changes</strong>, а при первом пуше —
+                  <strong>Publish Branch</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          <strong>Когда вы нажимаете кнопку в VS Code, редактор под капотом
+          выполняет ту же самую команду, которую вы ввели бы в терминале.</strong>
+          Кнопки — не «другой Git», а обёртка над теми же командами, поэтому
+          и терминал, и панель показывают одно и то же состояние репозитория.
+        </p>
+
+        <h3>Практика в симуляции</h3>
+        <p>
+          Попробуйте ввести эти команды в терминал (в центре экрана)
+          и посмотрите, как синхронно меняется панель Source Control (справа).
+          В реальном VS Code вы можете делать это как командами, так
+          и кликами — результат будет одинаковым.
+        </p>
+        <ol class="lesson-steps">
+          <li>
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git add .</a>
+            — файл уедет из <em>Changes</em> в <em>Staged Changes</em>.
+          </li>
+          <li>
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git commit -m "Update from VS Code"</a>
+            — список очистится, а VS Code покажет уведомление
+            <strong>Successfully committed</strong>.
+          </li>
+          <li>
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Работа-с-удалёнными-репозиториями" target="_blank" rel="noopener noreferrer">git push</a>
+            — коммит отправится на GitHub и появится в Remote Repository.
+          </li>
+        </ol>
+        <pre class="lesson-code">$ git add .
+$ git commit -m "Update from VS Code"
+[master 3f9a1c2] Update from VS Code
+ 1 file changed
+$ git push</pre>
+
+        <p class="lesson-tip">
+          Кнопки на панели справа не нажимаются — это витрина, которая повторяет
+          состояние репозитория. Представьте, что вы могли бы нажать
+          <strong>+</strong>, галочку <strong>✓ Commit</strong> или
+          <strong>Sync Changes</strong>: в настоящем редакторе получилось бы
+          ровно то же, что и от команд в терминале. В остальных уроках курса
+          панель работает по-старому — тремя колонками.
+        </p>
+
+        <section class="tasks" aria-labelledby="tasks-title">
+          <div class="tasks-head">
+            <h3 class="tasks-title" id="tasks-title">Задачи урока</h3>
+            <span class="tasks-count" data-tasks-count>0/3</span>
+          </div>
+          <ul class="tasks-list" data-tasks>
+            <li class="task">
+              <span class="task-check" aria-hidden="true"></span>
+              <span class="task-label">Выполнить команду: <code>git add .</code></span>
+            </li>
+            <li class="task">
+              <span class="task-check" aria-hidden="true"></span>
+              <span class="task-label">Выполнить команду: <code>git commit -m "Update from VS Code"</code></span>
+            </li>
+            <li class="task">
+              <span class="task-check" aria-hidden="true"></span>
+              <span class="task-label">Выполнить команду: <code>git push</code></span>
+            </li>
+          </ul>
+        </section>
+      </article>
+
+      <aside class="terminal" data-terminal aria-label="Терминал урока">
+        <div class="terminal-bar" aria-hidden="true">
+          <span class="terminal-dot terminal-dot--close"></span>
+          <span class="terminal-dot terminal-dot--min"></span>
+          <span class="terminal-dot terminal-dot--max"></span>
+          <span class="terminal-title">terminal — ~/git-tutorial</span>
+          <span class="terminal-branch" data-branch hidden>master</span>
+        </div>
+        <div class="terminal-body" data-terminal-body>
+          <div class="terminal-history" data-terminal-history role="log" aria-live="polite" aria-label="История команд">
+            <p class="terminal-line terminal-comment">Терминал против кнопок: git add . → git commit -m "Update from VS Code" → git push.</p>
+          </div>
+          <div class="terminal-input-line">
+            <span class="terminal-prompt" data-terminal-prompt aria-hidden="true">user@git-tutorial:~$</span>
+            <input
+              class="terminal-input"
+              data-terminal-input
+              id="lesson-terminal-input"
+              type="text"
+              aria-label="Введите команду"
+              autocomplete="off"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+              enterkeyhint="send"
+            >
+          </div>
+        </div>
+      </aside>
+
+      <aside class="vscode-panel" aria-label="Панель Source Control, как в VS Code">
+        <div class="vscode-titlebar">
+          <svg class="vscode-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true" focusable="false">
+            <circle cx="4.6" cy="3.4" r="1.9"></circle>
+            <circle cx="4.6" cy="12.6" r="1.9"></circle>
+            <circle cx="11.4" cy="5.6" r="1.9"></circle>
+            <path d="M4.6 5.3v5.4M11.4 7.5c0 2-1.6 2.6-3.2 3.3"></path>
+          </svg>
+          <span class="vscode-title">Source Control</span>
+          <span class="vscode-count" data-vscode-total>0</span>
+        </div>
+
+        <div class="vscode-body">
+          <div class="vscode-repo">
+            <span>my-git-project</span>
+            <span class="vscode-branch" data-vscode-branch>master</span>
+          </div>
+
+          <div class="vscode-message">Сообщение (нажмите ⌘Enter или Ctrl+Enter)</div>
+
+          <div class="vscode-actions">
+            <span class="vscode-btn">✓ Commit</span>
+            <span class="vscode-btn vscode-btn--ghost">⟳ Sync Changes</span>
+          </div>
+
+          <div class="vscode-section">
+            <div class="vscode-section-head">
+              Changes
+              <span class="vscode-count" data-vscode-changes>0</span>
+            </div>
+            <ul class="vscode-list" data-list="vscode-changes" aria-label="Changes"></ul>
+          </div>
+
+          <div class="vscode-section">
+            <div class="vscode-section-head">
+              Staged Changes
+              <span class="vscode-count" data-vscode-staged>0</span>
+            </div>
+            <ul class="vscode-list" data-list="vscode-staged" aria-label="Staged Changes"></ul>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <section class="remote" aria-labelledby="remote-title">
+      <header class="explorer-bar remote-bar">
+        <svg class="explorer-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M1.6 4h4.3l1.3 1.7h7.2v7.1H1.6z" fill="currentColor" opacity="0.85"></path>
+        </svg>
+        <h2 class="explorer-title" id="remote-title">Remote Repository (GitHub)</h2>
+        <span class="explorer-count" data-count="remote">0</span>
+      </header>
+
+      <div class="gh-profile">
+        <span class="gh-avatar" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" focusable="false">
+            <circle cx="8" cy="5.2" r="2.5"></circle>
+            <path d="M3 13.6c.5-2.7 2.5-4 5-4s4.5 1.3 5 4"></path>
+          </svg>
+        </span>
+        <span class="gh-repo">
+          <span class="gh-owner">user</span><span class="gh-sep">/</span><strong>my-git-project</strong>
+        </span>
+        <span class="gh-public">Public</span>
+        <span class="gh-remote-url" data-remote-url title="Remote URL не задан">origin не настроен</span>
+      </div>
+
+      <ul class="gh-commits" data-list="remote" aria-label="Коммиты на GitHub"></ul>
+    </section>
+
+    <nav class="lesson-actions" aria-label="Навигация по урокам">
+      <a class="btn btn-ghost" href="lesson-20.html">← Предыдущий урок</a>
+      <button class="btn btn-primary btn--locked" type="button" disabled title="Это бонусный урок — следующих нет">
+        Следующий урок →
+      </button>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-credit">
+        Разработано <a class="footer-link" href="https://github.com/DNKlyosov" target="_blank" rel="noopener noreferrer">DNKlyosov</a> © 2026
+      </p>
+      <div class="footer-actions">
+        <p class="footer-feedback">
+          Нашли ошибку или есть идея?
+          <a class="footer-link" href="https://github.com/DNKlyosov/git-tutorial/issues/new" target="_blank" rel="noopener noreferrer">Оставить отзыв на GitHub</a>
+        </p>
+        <button class="footer-reset" type="button" data-reset-progress>Сбросить прогресс</button>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
+
+  <script src="../script.js" defer></script>
+  <script src="../simulator.js" defer></script>
+</body>
+</html>

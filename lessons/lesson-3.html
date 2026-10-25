@@ -57,7 +57,6 @@
   <main id="main" class="lesson-main">
     <header class="lesson-head">
       <p class="eyebrow">Урок 03 · 5 минут</p>
-      <h1>Фиксация изменений</h1>
       <p class="lesson-lead">
         Сохраняем подготовленные файлы в истории проекта первым коммитом
         и проверяем, что рабочая директория стала чистой.
@@ -66,27 +65,37 @@
 
     <div class="lesson-layout">
       <article class="lesson-theory">
-        <h2>Коммит — снимок проекта</h2>
+        <h2 class="theory-title">Урок 3. Фиксация изменений</h2>
+        <aside class="lesson-note" aria-label="Зачем это нужно?">
+          <p class="lesson-note-title"><span class="lesson-note-badge">NOTE</span> Зачем это нужно?</p>
+          <p>Коммит — точка, к которой можно вернуться: в нём сохранён снимок индекса вместе с автором, датой и сообщением. Пока коммитов нет, история пуста и отменить ошибку не к чему.</p>
+        </aside>
+
+        <h3>Коммит — снимок проекта</h3>
         <p>
           Коммит фиксирует состояние проекта в истории. Git берёт всё, что
           лежит в индексе (staging area), и сохраняет как точку, к которой можно
           вернуться позже.
         </p>
         <p>
-          Сначала файл готовят через <code>git add</code>, затем фиксируют
-          командой <code>git commit</code> с коротким сообщением: оно объясняет,
-          что именно изменилось.
+          Сначала файл готовят через
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git add</a>,
+          затем фиксируют командой
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git commit</a>
+          с коротким сообщением: оно объясняет, что именно изменилось.
         </p>
         <ol class="lesson-steps">
           <li>
-            <code>git add index.html</code> — подготовить файл к коммиту.
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git add index.html</a>
+            — подготовить файл к коммиту.
           </li>
           <li>
-            <code>git commit -m "Add index.html"</code> — сохранить снимок
-            в истории.
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git commit -m "Add index.html"</a>
+            — сохранить снимок в истории.
           </li>
           <li>
-            <code>git status</code> — убедиться, что рабочая директория чиста.
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git status</a>
+            — убедиться, что рабочая директория чиста.
           </li>
         </ol>
         <p class="lesson-tip">
@@ -96,21 +105,21 @@
 
         <section class="tasks" aria-labelledby="tasks-title">
           <div class="tasks-head">
-            <h2 class="tasks-title" id="tasks-title">Задачи урока</h2>
+            <h3 class="tasks-title" id="tasks-title">Задачи урока</h3>
             <span class="tasks-count" data-tasks-count>0/3</span>
           </div>
           <ul class="tasks-list" data-tasks>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Подготовить index.html к коммиту (команда git add)</span>
+              <span class="task-label">Выполнить команду: <code>git add index.html</code></span>
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Создать первый коммит с сообщением "Add index.html" (команда git commit)</span>
+              <span class="task-label">Выполнить команду: <code>git commit -m "Add index.html"</code></span>
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Убедиться, что рабочая директория чиста (команда git status)</span>
+              <span class="task-label">Выполнить команду: <code>git status</code></span>
             </li>
           </ul>
         </section>
@@ -122,6 +131,7 @@
           <span class="terminal-dot terminal-dot--min"></span>
           <span class="terminal-dot terminal-dot--max"></span>
           <span class="terminal-title">terminal — ~/git-tutorial</span>
+          <span class="terminal-branch" data-branch hidden>master</span>
         </div>
         <div class="terminal-body" data-terminal-body>
           <div class="terminal-history" data-terminal-history role="log" aria-live="polite" aria-label="История команд">
@@ -217,14 +227,16 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>GitУчебник · открытый проект</p>
+      <p class="footer-credit">
+        Разработано <a class="footer-link" href="https://github.com/DNKlyosov" target="_blank" rel="noopener noreferrer">DNKlyosov</a> © 2026
+      </p>
       <div class="footer-actions">
+        <p class="footer-feedback">
+          Нашли ошибку или есть идея?
+          <a class="footer-link" href="https://github.com/DNKlyosov/git-tutorial/issues/new" target="_blank" rel="noopener noreferrer">Оставить отзыв на GitHub</a>
+        </p>
         <button class="footer-reset" type="button" data-reset-progress>Сбросить прогресс</button>
-        <span class="footer-meta">HTML · CSS · JS без зависимостей</span>
       </div>
-    </div>
-    <div class="container footer-dev">
-      <button class="footer-dev-link" type="button" data-reset-progress-silent>Очистить кэш урока (только для тестов)</button>
     </div>
   </footer>
 

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Временное убежище — GitУчебник</title>
+  <meta name="description" content="Десятый урок: git stash и git stash pop — прячем незаконченные изменения, чтобы срочно переключиться на другую задачу.">
+  <meta name="theme-color" content="#fbfbf9">
+  <link rel="stylesheet" href="../style.css">
+  <script>
+    (function () {
+      var theme = null;
+      try {
+        theme = localStorage.getItem("git-tutorial:theme");
+      } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+</head>
+<body class="page-lesson" data-lesson-id="lesson-10" data-lesson-goals='["touch wip.txt","git add wip.txt","git stash","git stash pop"]'>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="На главную">
+        <span class="brand-mark" aria-hidden="true">◆</span>
+        <span class="brand-text">Git<em>Учебник</em></span>
+      </a>
+
+      <nav class="site-nav" aria-label="Основная навигация">
+        <a href="../index.html#lessons" class="nav-link">Все уроки</a>
+        <span class="user-chip" data-user hidden>
+          <span class="user-avatar" data-user-avatar aria-hidden="true">?</span>
+          <span class="user-name" data-user-name></span>
+        </span>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Переключить тему">
+          <svg class="theme-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4.2"></circle>
+            <path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.3 5.3l1.9 1.9M16.8 16.8l1.9 1.9M18.7 5.3l-1.9 1.9M7.2 16.8l-1.9 1.9"></path>
+          </svg>
+          <svg class="theme-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2Z"></path>
+          </svg>
+          <span class="theme-label">Светлая</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="lesson-main">
+    <header class="lesson-head">
+      <p class="eyebrow">Урок 10 · 5 минут</p>
+      <p class="lesson-lead">
+        Незаконченная работа, а срочно нужна другая задача? Спрячем изменения
+        в stash и вернём их, когда освободимся.
+      </p>
+    </header>
+
+    <div class="lesson-layout">
+      <article class="lesson-theory">
+        <h2 class="theory-title">Урок 10. Временное убежище</h2>
+        <aside class="lesson-note" aria-label="Зачем это нужно?">
+          <p class="lesson-note-title"><span class="lesson-note-badge">NOTE</span> Зачем это нужно?</p>
+          <p>Незаконченную работу не хочется коммитить, а переключаться на другую задачу нужно сейчас. <a class="git-command" href="https://git-scm.com/book/ru/v2/Инструменты-Git-Припрятывание-и-очистка" target="_blank" rel="noopener noreferrer">git stash</a> временно убирает правки, чтобы рабочая директория стала чистой.</p>
+        </aside>
+
+        <h3>Зачем прятать изменения</h3>
+        <p>
+          Представьте: вы правите файл, ещё не готовы к коммиту, и тут
+          приходит срочная задача. Коммитить черновик не хочется — история
+          станет грязной.
+        </p>
+        <p>
+          Переключаться на другую ветку с «грязной» директорией тоже неудобно
+          и рискованно. Для такого случая есть
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Инструменты-Git-Припрятывание-и-очистка" target="_blank" rel="noopener noreferrer">git stash</a>.
+        </p>
+        <p>
+          Команда забирает незаконченные изменения в отдельное хранилище
+          и оставляет рабочую директорию чистой — как будто вы ничего
+          не трогали.
+        </p>
+
+        <h3>Как вернуть спрятанное</h3>
+        <p>
+          Когда срочная задача сделана, выполните
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Инструменты-Git-Припрятывание-и-очистка" target="_blank" rel="noopener noreferrer">git stash pop</a>:
+          изменения вернутся, а запись из stash исчезнет. Commit при этом
+          не создаётся — вы просто продолжаете с того же места.
+        </p>
+        <p>
+          В этом уроке файл сначала попадает в индекс, поэтому
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Инструменты-Git-Припрятывание-и-очистка" target="_blank" rel="noopener noreferrer">git stash</a>
+          уносит его прямо из Staging Area, а
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Инструменты-Git-Припрятывание-и-очистка" target="_blank" rel="noopener noreferrer">git stash pop</a>
+          возвращает обратно в индекс.
+        </p>
+
+        <ol class="lesson-steps">
+          <li><code>touch wip.txt</code> — создать файл с начатой работой.</li>
+          <li><a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Запись-изменений-в-репозиторий" target="_blank" rel="noopener noreferrer">git add wip.txt</a> — подготовить его к коммиту.</li>
+          <li><a class="git-command" href="https://git-scm.com/book/ru/v2/Инструменты-Git-Припрятывание-и-очистка" target="_blank" rel="noopener noreferrer">git stash</a> — спрятать: индекс снова чистый.</li>
+          <li><a class="git-command" href="https://git-scm.com/book/ru/v2/Инструменты-Git-Припрятывание-и-очистка" target="_blank" rel="noopener noreferrer">git stash pop</a> — вернуть работу из stash.</li>
+        </ol>
+        <p class="lesson-tip">
+          В панели справа появился отдельный блок Stash: после
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Инструменты-Git-Припрятывание-и-очистка" target="_blank" rel="noopener noreferrer">git stash</a>
+          файл исчезнет из Staging и окажется там, а после
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Инструменты-Git-Припрятывание-и-очистка" target="_blank" rel="noopener noreferrer">git stash pop</a>
+          вернётся в индекс.
+        </p>
+
+        <section class="tasks" aria-labelledby="tasks-title">
+          <div class="tasks-head">
+            <h3 class="tasks-title" id="tasks-title">Задачи урока</h3>
+            <span class="tasks-count" data-tasks-count>0/4</span>
+          </div>
+          <ul class="tasks-list" data-tasks>
+            <li class="task">
+              <span class="task-check" aria-hidden="true"></span>
+              <span class="task-label">Выполнить команду: <code>touch wip.txt</code></span>
+            </li>
+            <li class="task">
+              <span class="task-check" aria-hidden="true"></span>
+              <span class="task-label">Выполнить команду: <code>git add wip.txt</code></span>
+            </li>
+            <li class="task">
+              <span class="task-check" aria-hidden="true"></span>
+              <span class="task-label">Выполнить команду: <code>git stash</code></span>
+            </li>
+            <li class="task">
+              <span class="task-check" aria-hidden="true"></span>
+              <span class="task-label">Выполнить команду: <code>git stash pop</code></span>
+            </li>
+          </ul>
+        </section>
+      </article>
+
+      <aside class="terminal" data-terminal aria-label="Терминал урока">
+        <div class="terminal-bar" aria-hidden="true">
+          <span class="terminal-dot terminal-dot--close"></span>
+          <span class="terminal-dot terminal-dot--min"></span>
+          <span class="terminal-dot terminal-dot--max"></span>
+          <span class="terminal-title">terminal — ~/git-tutorial</span>
+          <span class="terminal-branch" data-branch hidden>master</span>
+        </div>
+        <div class="terminal-body" data-terminal-body>
+          <div class="terminal-history" data-terminal-history role="log" aria-live="polite" aria-label="История команд">
+            <p class="terminal-line terminal-comment">Создайте файл: touch wip.txt, добавьте в индекс: git add wip.txt, спрячьте: git stash и верните: git stash pop.</p>
+          </div>
+          <div class="terminal-input-line">
+            <span class="terminal-prompt" data-terminal-prompt aria-hidden="true">user@git-tutorial:~$</span>
+            <input
+              class="terminal-input"
+              data-terminal-input
+              id="lesson-terminal-input"
+              type="text"
+              aria-label="Введите команду"
+              autocomplete="off"
+              autocapitalize="off"
+              autocorrect="off"
+              spellcheck="false"
+              enterkeyhint="send"
+            >
+          </div>
+        </div>
+      </aside>
+
+      <aside class="dashboard" aria-label="Дашборд состояния репозитория">
+        <section class="explorer">
+          <header class="explorer-bar">
+            <svg class="explorer-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M1.6 4h4.3l1.3 1.7h7.2v7.1H1.6z" fill="currentColor" opacity="0.85"></path>
+            </svg>
+            <h2 class="explorer-title" title="Working Directory (VS Code)">Working Directory (VS Code)</h2>
+            <span class="explorer-count" data-count="workdir">0</span>
+          </header>
+          <ul class="file-list" data-list="workdir" aria-label="Файлы рабочей директории"></ul>
+        </section>
+
+        <section class="explorer">
+          <header class="explorer-bar">
+            <svg class="explorer-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M1.6 4h4.3l1.3 1.7h7.2v7.1H1.6z" fill="currentColor" opacity="0.85"></path>
+            </svg>
+            <h2 class="explorer-title" title="Staging Area (Git Index)">Staging Area (Git Index)</h2>
+            <span class="explorer-count" data-count="staged">0</span>
+          </header>
+          <ul class="file-list" data-list="staged" aria-label="Файлы в индексе"></ul>
+        </section>
+
+        <section class="explorer explorer--stash">
+          <header class="explorer-bar">
+            <svg class="explorer-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M2.6 4.4h10.8M2.6 8h10.8M2.6 11.6h10.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"></path>
+            </svg>
+            <h2 class="explorer-title" title="git stash">Stash</h2>
+            <span class="explorer-count" data-count="stash">0</span>
+          </header>
+          <ul class="file-list" data-list="stash" aria-label="Спрятанные изменения"></ul>
+        </section>
+
+        <section class="explorer">
+          <header class="explorer-bar">
+            <svg class="explorer-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M1.6 4h4.3l1.3 1.7h7.2v7.1H1.6z" fill="currentColor" opacity="0.85"></path>
+            </svg>
+            <h2 class="explorer-title" title="Local Repository (Commits)">Local Repository (Commits)</h2>
+            <span class="explorer-count" data-count="repo">0</span>
+          </header>
+          <ul class="file-list" data-list="repo" aria-label="Коммиты"></ul>
+        </section>
+      </aside>
+    </div>
+
+    <section class="remote" aria-labelledby="remote-title">
+      <header class="explorer-bar remote-bar">
+        <svg class="explorer-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M1.6 4h4.3l1.3 1.7h7.2v7.1H1.6z" fill="currentColor" opacity="0.85"></path>
+        </svg>
+        <h2 class="explorer-title" id="remote-title">Remote Repository (GitHub)</h2>
+        <span class="explorer-count" data-count="remote">0</span>
+      </header>
+
+      <div class="gh-profile">
+        <span class="gh-avatar" aria-hidden="true">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" focusable="false">
+            <circle cx="8" cy="5.2" r="2.5"></circle>
+            <path d="M3 13.6c.5-2.7 2.5-4 5-4s4.5 1.3 5 4"></path>
+          </svg>
+        </span>
+        <span class="gh-repo">
+          <span class="gh-owner">user</span><span class="gh-sep">/</span><strong>my-git-project</strong>
+        </span>
+        <span class="gh-public">Public</span>
+        <span class="gh-remote-url" data-remote-url title="Remote URL не задан">origin не настроен</span>
+      </div>
+
+      <ul class="gh-commits" data-list="remote" aria-label="Коммиты на GitHub"></ul>
+    </section>
+
+    <nav class="lesson-actions" aria-label="Навигация по урокам">
+      <a class="btn btn-ghost" href="lesson-9.html">← Предыдущий урок</a>
+      <button class="btn btn-primary btn--locked" type="button" data-next-lesson="lesson-11.html" disabled title="Сначала выполните задачи урока">
+        Следующий урок →
+      </button>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-credit">
+        Разработано <a class="footer-link" href="https://github.com/DNKlyosov" target="_blank" rel="noopener noreferrer">DNKlyosov</a> © 2026
+      </p>
+      <div class="footer-actions">
+        <p class="footer-feedback">
+          Нашли ошибку или есть идея?
+          <a class="footer-link" href="https://github.com/DNKlyosov/git-tutorial/issues/new" target="_blank" rel="noopener noreferrer">Оставить отзыв на GitHub</a>
+        </p>
+        <button class="footer-reset" type="button" data-reset-progress>Сбросить прогресс</button>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../script.js" defer></script>
+  <script src="../simulator.js" defer></script>
+</body>
+</html>

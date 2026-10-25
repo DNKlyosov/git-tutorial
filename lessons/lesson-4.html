@@ -57,7 +57,6 @@
   <main id="main" class="lesson-main">
     <header class="lesson-head">
       <p class="eyebrow">Урок 04 · 5 минут</p>
-      <h1>Связь с GitHub</h1>
       <p class="lesson-lead">
         Связываем проект с GitHub, отправляем коммиты и получаем изменения,
         которые сделал коллега.
@@ -66,50 +65,69 @@
 
     <div class="lesson-layout">
       <article class="lesson-theory">
-        <h2>Связь, отправка и получение</h2>
+        <h2 class="theory-title">Урок 4. Связь с GitHub</h2>
+        <aside class="lesson-note" aria-label="Зачем это нужно?">
+          <p class="lesson-note-title"><span class="lesson-note-badge">NOTE</span> Зачем это нужно?</p>
+          <p>Пока проект не связан с удалённым репозиторием, коммиты живут только на вашем компьютере: их не видит команда и не сохранит резервная копия. GitHub даёт общую копию, с которой работают все участники.</p>
+        </aside>
+
+        <h3>Связь, отправка и получение</h3>
         <p>
           GitHub хранит копию проекта в интернете — для резервной копии,
           совместной работы и публикации. Связь с удалённым репозиторием
           называют <code>origin</code>.
         </p>
         <p>
-          <code>git remote add</code> запоминает адрес, <code>git push</code>
-          отправляет коммиты, <code>git fetch</code> скачивает изменения без
-          применения, а <code>git pull</code> скачивает и сразу применяет их.
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Работа-с-удалёнными-репозиториями" target="_blank" rel="noopener noreferrer">git remote add</a>
+          запоминает адрес,
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Работа-с-удалёнными-репозиториями" target="_blank" rel="noopener noreferrer">git push</a>
+          отправляет коммиты,
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Работа-с-удалёнными-репозиториями" target="_blank" rel="noopener noreferrer">git fetch</a>
+          скачивает изменения без применения, а
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Работа-с-удалёнными-репозиториями" target="_blank" rel="noopener noreferrer">git pull</a>
+          скачивает и сразу применяет их.
         </p>
         <ol class="lesson-steps">
           <li>
-            <code>git remote add origin https://github.com/user/project.git</code>
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Работа-с-удалёнными-репозиториями" target="_blank" rel="noopener noreferrer">git remote add origin https://github.com/user/project.git</a>
             — связать проект с GitHub.
           </li>
           <li>
-            <code>git push -u origin master</code> — отправить коммиты.
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Работа-с-удалёнными-репозиториями" target="_blank" rel="noopener noreferrer">git push -u origin master</a>
+            — отправить коммиты.
           </li>
           <li>
             Коллега пушит новый коммит — движок напечатает учебную подсказку.
           </li>
           <li>
-            <code>git pull origin master</code> — скачать и применить изменения.
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Работа-с-удалёнными-репозиториями" target="_blank" rel="noopener noreferrer">git pull origin master</a>
+            — скачать и применить изменения.
           </li>
         </ol>
+        <aside class="lesson-note" aria-label="Про master и main">
+          <p class="lesson-note-title"><span class="lesson-note-badge">NOTE</span> master или main</p>
+          <p>В нашем тренажёре используется историческое название главной ветки — <code>master</code>. В современных версиях Git и на GitHub по умолчанию используется название <code>main</code>. Если вы работаете в реальном терминале, и Git ругается, что ветки <code>master</code> не существует, попробуйте заменить в команде <code>master</code> на <code>main</code>.</p>
+        </aside>
         <p class="lesson-tip">
-          После <code>git pull</code> в Local Repository появится новый коммит
-          коллеги, а в терминале — сообщение о том, что файлы обновлены.
+          После
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Основы-Git-Работа-с-удалёнными-репозиториями" target="_blank" rel="noopener noreferrer">git pull</a>
+          в Local Repository появится новый коммит коллеги, а в терминале —
+          сообщение о том, что файлы обновлены.
         </p>
 
         <section class="tasks" aria-labelledby="tasks-title">
           <div class="tasks-head">
-            <h2 class="tasks-title" id="tasks-title">Задачи урока</h2>
+            <h3 class="tasks-title" id="tasks-title">Задачи урока</h3>
             <span class="tasks-count" data-tasks-count>0/4</span>
           </div>
           <ul class="tasks-list" data-tasks>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Связать проект с GitHub (команда git remote add)</span>
+              <span class="task-label">Выполнить команду: <code>git remote add origin https://github.com/user/project.git</code></span>
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Отправить коммиты на GitHub (команда git push -u origin master)</span>
+              <span class="task-label">Выполнить команду: <code>git push -u origin master</code></span>
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
@@ -117,7 +135,7 @@
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Скачать и применить изменения (команда git pull origin master)</span>
+              <span class="task-label">Выполнить команду: <code>git pull origin master</code></span>
             </li>
           </ul>
         </section>
@@ -129,6 +147,7 @@
           <span class="terminal-dot terminal-dot--min"></span>
           <span class="terminal-dot terminal-dot--max"></span>
           <span class="terminal-title">terminal — ~/git-tutorial</span>
+          <span class="terminal-branch" data-branch hidden>master</span>
         </div>
         <div class="terminal-body" data-terminal-body>
           <div class="terminal-history" data-terminal-history role="log" aria-live="polite" aria-label="История команд">
@@ -224,14 +243,16 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>GitУчебник · открытый проект</p>
+      <p class="footer-credit">
+        Разработано <a class="footer-link" href="https://github.com/DNKlyosov" target="_blank" rel="noopener noreferrer">DNKlyosov</a> © 2026
+      </p>
       <div class="footer-actions">
+        <p class="footer-feedback">
+          Нашли ошибку или есть идея?
+          <a class="footer-link" href="https://github.com/DNKlyosov/git-tutorial/issues/new" target="_blank" rel="noopener noreferrer">Оставить отзыв на GitHub</a>
+        </p>
         <button class="footer-reset" type="button" data-reset-progress>Сбросить прогресс</button>
-        <span class="footer-meta">HTML · CSS · JS без зависимостей</span>
       </div>
-    </div>
-    <div class="container footer-dev">
-      <button class="footer-dev-link" type="button" data-reset-progress-silent>Очистить кэш урока (только для тестов)</button>
     </div>
   </footer>
 

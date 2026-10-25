@@ -57,28 +57,43 @@
   <main id="main" class="lesson-main">
     <header class="lesson-head">
       <p class="eyebrow">Урок 06 · 5 минут</p>
-      <h1>Слияние веток</h1>
       <p class="lesson-lead">
         Возвращаемся в главную ветку и вливаем в неё изменения из feature
-        командой git merge.
+        командой
+        <a class="git-command" href="https://git-scm.com/book/ru/v2/Ветвление-в-Git-О-ветвлении-в-двух-словах" target="_blank" rel="noopener noreferrer">git merge</a>.
       </p>
     </header>
 
     <div class="lesson-layout">
       <article class="lesson-theory">
-        <h2>Как объединить работу</h2>
+        <h2 class="theory-title">Урок 6. Слияние веток</h2>
+        <aside class="lesson-note" aria-label="Зачем это нужно?">
+          <p class="lesson-note-title"><span class="lesson-note-badge">NOTE</span> Зачем это нужно?</p>
+          <p>Работа в ветке ничего не меняет в главной версии проекта, пока её не сольют. Слияние переносит готовые изменения в master — только после этого ими пользуются остальные.</p>
+        </aside>
+
+        <h3>Как объединить работу</h3>
         <p>
           Когда эксперимент в ветке <code>feature</code> удался, его изменения
-          переносят в основную ветку. Сначала переключаются на <code>master</code>,
-          затем выполняют <code>git merge feature</code>.
+          переносят в основную ветку. Сначала переключаются на
+          <code>master</code> командой
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Ветвление-в-Git-О-ветвлении-в-двух-словах" target="_blank" rel="noopener noreferrer">git checkout</a>,
+          затем выполняют
+          <a class="git-command" href="https://git-scm.com/book/ru/v2/Ветвление-в-Git-О-ветвлении-в-двух-словах" target="_blank" rel="noopener noreferrer">git merge feature</a>.
         </p>
         <p>
           Git создаёт коммит слияния и добавляет его в историю: изменения из
           ветки становятся частью главной линии.
         </p>
         <ol class="lesson-steps">
-          <li><code>git checkout master</code> — вернуться в главную ветку.</li>
-          <li><code>git merge feature</code> — влить изменения из feature.</li>
+          <li>
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Ветвление-в-Git-О-ветвлении-в-двух-словах" target="_blank" rel="noopener noreferrer">git checkout master</a>
+            — вернуться в главную ветку.
+          </li>
+          <li>
+            <a class="git-command" href="https://git-scm.com/book/ru/v2/Ветвление-в-Git-О-ветвлении-в-двух-словах" target="_blank" rel="noopener noreferrer">git merge feature</a>
+            — влить изменения из feature.
+          </li>
         </ol>
         <p class="lesson-tip">
           После слияния в Local Repository появится карточка коммита с меткой
@@ -88,17 +103,17 @@
 
         <section class="tasks" aria-labelledby="tasks-title">
           <div class="tasks-head">
-            <h2 class="tasks-title" id="tasks-title">Задачи урока</h2>
+            <h3 class="tasks-title" id="tasks-title">Задачи урока</h3>
             <span class="tasks-count" data-tasks-count>0/2</span>
           </div>
           <ul class="tasks-list" data-tasks>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Вернуться в главную ветку master (команда git checkout)</span>
+              <span class="task-label">Выполнить команду: <code>git checkout master</code></span>
             </li>
             <li class="task">
               <span class="task-check" aria-hidden="true"></span>
-              <span class="task-label">Слить ветку feature в master (команда git merge)</span>
+              <span class="task-label">Выполнить команду: <code>git merge feature</code></span>
             </li>
           </ul>
         </section>
@@ -198,7 +213,7 @@
 
     <nav class="lesson-actions" aria-label="Навигация по урокам">
       <a class="btn btn-ghost" href="lesson-5.html">← Предыдущий урок</a>
-      <button class="btn btn-primary btn--locked" type="button" disabled title="Это последний урок курса">
+      <button class="btn btn-primary btn--locked" type="button" data-next-lesson="lesson-7.html" disabled title="Сначала выполните задачи урока">
         Следующий урок →
       </button>
     </nav>
@@ -206,14 +221,16 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>GitУчебник · открытый проект</p>
+      <p class="footer-credit">
+        Разработано <a class="footer-link" href="https://github.com/DNKlyosov" target="_blank" rel="noopener noreferrer">DNKlyosov</a> © 2026
+      </p>
       <div class="footer-actions">
+        <p class="footer-feedback">
+          Нашли ошибку или есть идея?
+          <a class="footer-link" href="https://github.com/DNKlyosov/git-tutorial/issues/new" target="_blank" rel="noopener noreferrer">Оставить отзыв на GitHub</a>
+        </p>
         <button class="footer-reset" type="button" data-reset-progress>Сбросить прогресс</button>
-        <span class="footer-meta">HTML · CSS · JS без зависимостей</span>
       </div>
-    </div>
-    <div class="container footer-dev">
-      <button class="footer-dev-link" type="button" data-reset-progress-silent>Очистить кэш урока (только для тестов)</button>
     </div>
   </footer>
 
