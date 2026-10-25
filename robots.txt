@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dnklyosov.github.io/git-tutorial/sitemap.xml
